@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{64FB68DA-74F4-4908-AF4B-7C7D3B115AD9}|DigitalCloud.CryptoInfomer.UI\\DigitalCloud.CryptoInfomer.UI.csproj|c:\\users\\tania\\onedrive\\desktop\\home_work\\wpf_test-project\\digitalcloud.cryptoinfomer\\digitalcloud.cryptoinformer\\digitalcloud.cryptoinfomer.ui\\digitalcloud.cryptoinfomer.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{64FB68DA-74F4-4908-AF4B-7C7D3B115AD9}|DigitalCloud.CryptoInfomer.UI\\DigitalCloud.CryptoInfomer.UI.csproj|solutionrelative:digitalcloud.cryptoinfomer.ui\\digitalcloud.cryptoinfomer.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{88AAB4B4-B238-4E35-8668-1EF43F856275}|DigitalCloud.CryptoInformer.Infrastructure\\DigitalCloud.CryptoInformer.Infrastructure.csproj|c:\\users\\tania\\onedrive\\desktop\\home_work\\wpf_test-project\\digitalcloud.cryptoinfomer\\digitalcloud.cryptoinformer\\digitalcloud.cryptoinformer.infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{88AAB4B4-B238-4E35-8668-1EF43F856275}|DigitalCloud.CryptoInformer.Infrastructure\\DigitalCloud.CryptoInformer.Infrastructure.csproj|solutionrelative:digitalcloud.cryptoinformer.infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -26,8 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DigitalCloud.CryptoInfomer.UI",
+              "DocumentMoniker": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\DigitalCloud.CryptoInfomer.UI\\DigitalCloud.CryptoInfomer.UI.csproj",
+              "RelativeDocumentMoniker": "DigitalCloud.CryptoInfomer.UI\\DigitalCloud.CryptoInfomer.UI.csproj",
+              "ToolTip": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\DigitalCloud.CryptoInfomer.UI\\DigitalCloud.CryptoInfomer.UI.csproj*",
+              "RelativeToolTip": "DigitalCloud.CryptoInfomer.UI\\DigitalCloud.CryptoInfomer.UI.csproj*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-25T10:11:21.769Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -46,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\DigitalCloud.CryptoInformer.Infrastructure\\Class1.cs",
               "RelativeDocumentMoniker": "DigitalCloud.CryptoInformer.Infrastructure\\Class1.cs",
@@ -59,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\DigitalCloud.CryptoInformer.Application\\Class1.cs",
               "RelativeDocumentMoniker": "DigitalCloud.CryptoInformer.Application\\Class1.cs",
@@ -72,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\DigitalCloud.CryptoInfomer.UI\\MainWindow.xaml",
               "RelativeDocumentMoniker": "DigitalCloud.CryptoInfomer.UI\\MainWindow.xaml",
@@ -84,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Tania\\OneDrive\\Desktop\\Home_work\\WPF_Test-Project\\DigitalCloud.CryptoInfomer\\DigitalCloud.CryptoInformer\\DigitalCloud.CryptoInfomer.UI\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "DigitalCloud.CryptoInfomer.UI\\MainWindow.xaml.cs",
