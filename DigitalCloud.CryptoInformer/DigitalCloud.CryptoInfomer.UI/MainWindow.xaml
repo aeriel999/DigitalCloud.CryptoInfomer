@@ -5,8 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        ThemeMode="Dark">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Menu>
+                <MenuItem Header="Home">
+                </MenuItem>
+                <MenuItem Header="Exchanges">
+                </MenuItem>
+                <MenuItem Header="About">
+                </MenuItem>
+            </Menu>
+            <Label  Grid.Column="1" Content="I am a Logo." />
+            <Grid  Grid.Column="2">
+                <TextBox />
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Height="Auto" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Content="Top 10" />
+            <Button Grid.Column="1" Content="Top 100" />
+            <Button Grid.Column="2" Content="All" />
+            <ComboBox Grid.Column="3" MinWidth="200" HorizontalAlignment="Left" SelectedIndex="0">
+                <ComboBoxItem Content="Blue" />
+                <ComboBoxItem Content="Green" />
+                <ComboBoxItem Content="Red" />
+                <ComboBoxItem Content="Yellow" />
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="2" Height="Auto" VerticalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding ViewModel.ProductsCollection, Mode=TwoWay}" />
+        </Grid>
     </Grid>
 </Window>
