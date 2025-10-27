@@ -10,12 +10,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\Logo.png" />
+    <None Remove="Assets\Images\logo_4.png" />
+    <None Remove="Assets\Images\logo_45.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DigitalCloud.CryptoInformer.Application\DigitalCloud.CryptoInformer.Application.csproj" />
     <ProjectReference Include="..\DigitalCloud.CryptoInformer.Infrastructure\DigitalCloud.CryptoInformer.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\logo_4.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
