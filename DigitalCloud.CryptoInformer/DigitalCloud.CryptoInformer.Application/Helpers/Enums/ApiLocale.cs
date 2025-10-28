@@ -1,0 +1,38 @@
+﻿namespace DigitalCloud.CryptoInformer.Application.Helpers.Enums;
+
+public enum ApiLocale
+{
+    ar, 
+    bg, 
+    cs, 
+    da, 
+    de, 
+    el, 
+    en, 
+    es, 
+    fi, 
+    fr, 
+    he, 
+    hi, 
+    hr, 
+    hu, 
+    id, 
+    it, 
+    ja, 
+    ko, 
+    lt, 
+    nl, 
+    no, 
+    pl, 
+    pt, 
+    ro, 
+    ru, 
+    sk, 
+    sl, 
+    sv, 
+    th, 
+    tr, 
+    uk, 
+    vi, 
+    zh
+}

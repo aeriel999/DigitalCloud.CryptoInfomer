@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,17 @@ namespace DigitalCloud.CryptoInfomer.UI
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = App.Current.Services.GetService<ViewModel>();
         }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            
+
+
+        }
+
+          
     }
 }

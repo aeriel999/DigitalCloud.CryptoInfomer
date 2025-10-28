@@ -83,10 +83,10 @@
             <Button Grid.Column="1" Content="Top 100" />
             <Button Grid.Column="2" Content="All" />
             <ComboBox Grid.Column="3" MinWidth="200" HorizontalAlignment="Left" SelectedIndex="0">
-                <ComboBoxItem Content="Blue" />
-                <ComboBoxItem Content="Green" />
-                <ComboBoxItem Content="Red" />
-                <ComboBoxItem Content="Yellow" />
+                <ComboBoxItem Content="All markets" />
+                <ComboBoxItem Content="Market 1" />
+                <ComboBoxItem Content="Market 2" />
+                <ComboBoxItem Content="Market 3" />
             </ComboBox>
         </Grid>
        
