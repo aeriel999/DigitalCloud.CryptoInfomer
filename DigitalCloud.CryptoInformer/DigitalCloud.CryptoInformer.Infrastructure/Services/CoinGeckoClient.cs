@@ -21,7 +21,8 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
 				$"&order={request.CurrencyListOrder}" +
 				$"&per_page={request.ItemsPerPage}" +
 				$"&page={request.NumberOfPage}" +
-				$"&price_change_percentage={request.TimeFrame}" +
+                "&sparkline=false" +
+                $"&price_change_percentage={request.TimeFrame}" +
 				$"&locale={request.Locale}" +
 				$"&precision={request.CurrenciesPricePresision}");
 
@@ -58,8 +59,12 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
         {
             var result = await httpClient.GetFromJsonAsync<List<CurrencyInfoResponse>>(
                 $"{url}/coins/markets?" +
-                $"&per_page={10}" +
-                $"&page={1}");
+                "vs_currency=usd" +
+                "&order=market_cap_desc" +
+                "&per_page=10" +
+                "&page=1" +
+                "&sparkline=false" +
+                "&price_change_percentage=24h");
 
             if (result == null)
                 return Error.NotFound(

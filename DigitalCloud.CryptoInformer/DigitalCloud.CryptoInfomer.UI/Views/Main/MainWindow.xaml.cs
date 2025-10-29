@@ -25,12 +25,6 @@ public partial class MainWindow : Window
         DataContext = App.Current.Services.GetService<MainViewModel>();
     }
 
-    protected override void OnInitialized(EventArgs e)
-    {
-        
-
-
-    }
-
+    
       
 }

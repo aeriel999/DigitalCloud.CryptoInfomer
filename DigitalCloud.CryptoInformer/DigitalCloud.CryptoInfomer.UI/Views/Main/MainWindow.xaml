@@ -1,97 +1,126 @@
 ﻿<Window x:Class="DigitalCloud.CryptoInfomer.UI.Views.Main.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
-        mc:Ignorable="d"
-        Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-        Title="DigitalCloud.CryptoInfomer" Height="700" Width="1000"
-        ThemeMode="Light">
-    <Grid>
-        <!--Header-->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="7*"></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <Grid VerticalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
+		mc:Ignorable="d"
+		Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+		Title="DigitalCloud.CryptoInfomer" Height="700" Width="1000"
+		ThemeMode="Light">
+	<Grid>
+		<!--Header-->
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"></RowDefinition>
+			<RowDefinition Height="1*"></RowDefinition>
+			<RowDefinition Height="7*"></RowDefinition>
+		</Grid.RowDefinitions>
+		
+		<Grid VerticalAlignment="Stretch">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
 
-            <Menu HorizontalAlignment="Left" VerticalAlignment="Center">
-                <MenuItem Header="Home">
-                </MenuItem>
-                <MenuItem Header="Exchanges">
-                </MenuItem>
-                <MenuItem Header="About">
-                </MenuItem>
-            </Menu>
-            
-            <Image Grid.Column="1" 
-                Source="/Assets/Images/logo_4.png"
-                Height="auto"
-                MinHeight="20"
-                Margin="0, 15, 0, 15"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"/>
+			<Menu HorizontalAlignment="Left" VerticalAlignment="Center">
+				<MenuItem Header="Home">
+				</MenuItem>
+				<MenuItem Header="Exchanges">
+				</MenuItem>
+				<MenuItem Header="About">
+				</MenuItem>
+			</Menu>
+			
+			<Image Grid.Column="1" 
+				Source="/Assets/Images/logo_4.png"
+				Height="auto"
+				MinHeight="20"
+				Margin="0, 15, 0, 15"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Center"/>
 
-            <Grid Grid.Column="2" 
-                  HorizontalAlignment="Right" 
-                  VerticalAlignment="Center">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+			<Grid Grid.Column="2" 
+				  HorizontalAlignment="Right" 
+				  VerticalAlignment="Center">
+				  <Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"></ColumnDefinition>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
 
-                <Grid  HorizontalAlignment="Right" Margin="0,0,15,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                   
-                    <!--<TextBox />-->
-                    <TextBlock Grid.Column="1" 
-                                VerticalAlignment="Center"
-                                FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
-                                Text="&#xE721;"/>           
-                </Grid>
-                
-                <ComboBox Width="auto" 
-                          Grid.Column="1"
-                          HorizontalAlignment="Left" 
-                          SelectedIndex="0"
-                          Margin="10">
-                    <ComboBoxItem Content="EN" />
-                    <ComboBoxItem Content="UA" />
-                </ComboBox>
-            </Grid>
-        </Grid>
-       
-        <Grid Grid.Row="1" Height="Auto" VerticalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button Content="Top 10" />
+				<Grid  HorizontalAlignment="Right" Margin="0,0,15,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="1*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+				   
+					<!--<TextBox />-->
+					<TextBlock Grid.Column="1" 
+								VerticalAlignment="Center"
+								FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
+								Text="&#xE721;"/>           
+				</Grid>
+				
+				<ComboBox Width="auto" 
+						  Grid.Column="1"
+						  HorizontalAlignment="Left" 
+						  SelectedIndex="0"
+						  Margin="10">
+					<ComboBoxItem Content="EN" />
+					<ComboBoxItem Content="UA" />
+				</ComboBox>
+			</Grid>
+		</Grid>
+	   
+		<Grid Grid.Row="1" Height="Auto" VerticalAlignment="Stretch">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<!--<Button Content="Top 10" />-->
+            <Button Content="Load" Command="{Binding LoadCurrenciesCommand}" />
             <Button Grid.Column="1" Content="Top 100" />
-            <Button Grid.Column="2" Content="All" />
-            <ComboBox Grid.Column="3" MinWidth="200" HorizontalAlignment="Left" SelectedIndex="0">
-                <ComboBoxItem Content="All markets" />
-                <ComboBoxItem Content="Market 1" />
-                <ComboBoxItem Content="Market 2" />
-                <ComboBoxItem Content="Market 3" />
-            </ComboBox>
+			<Button Grid.Column="2" Content="All" />
+			<ComboBox Grid.Column="3" MinWidth="200" HorizontalAlignment="Left" SelectedIndex="0">
+				<ComboBoxItem Content="All markets" />
+				<ComboBoxItem Content="Market 1" />
+				<ComboBoxItem Content="Market 2" />
+				<ComboBoxItem Content="Market 3" />
+			</ComboBox>
+		</Grid>
+	   
+		<Grid Grid.Row="2" Height="Auto" VerticalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding CurrencyInfoResponses}"
+          AutoGenerateColumns="False"
+          HeadersVisibility="Column"
+          IsReadOnly="True"
+          RowHeight="40"
+          GridLinesVisibility="None"
+          Background="Transparent">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding MarketCapRank}" Width="40"/>
+                    <DataGridTemplateColumn Header="Coin" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding CurrencyIconImageLink}"
+                               Width="24" Height="24"/>
+                                    <TextBlock Text="{Binding CurrencyName}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding CurrencySymbol}" Foreground="Gray" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice, StringFormat={}{0:C2}}" Width="100"/>
+                    <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap, StringFormat={}{0:N0}}" Width="140"/>
+                    <DataGridTextColumn Header="Volume (24h)" Binding="{Binding TotalVolume, StringFormat={}{0:N0}}" Width="140"/>
+                    <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}%}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-       
-        <Grid Grid.Row="2" Height="Auto" VerticalAlignment="Stretch">
-            <DataGrid ItemsSource="{Binding ViewModel.ProductsCollection, Mode=TwoWay}" />
-        </Grid>
-    </Grid>
+	</Grid>
 </Window>
