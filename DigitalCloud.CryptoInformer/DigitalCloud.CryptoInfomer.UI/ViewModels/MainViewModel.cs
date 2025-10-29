@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
 
-namespace DigitalCloud.CryptoInfomer.UI;
+namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
 
-public class ViewModel(ICoinGeckoClient coinGeckoClient) : ObservableObject
+public class MainViewModel(ICoinGeckoClient coinGeckoClient) : ObservableObject
 {
      
     public async Task InitializeAsync()
