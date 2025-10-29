@@ -51,5 +51,4 @@ namespace DigitalCloud.CryptoInfomer.UI
             return services.BuildServiceProvider();
         }
     }
-
 }

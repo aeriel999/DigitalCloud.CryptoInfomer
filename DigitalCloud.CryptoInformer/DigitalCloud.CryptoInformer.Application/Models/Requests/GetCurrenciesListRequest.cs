@@ -1,11 +1,11 @@
-﻿using DigitalCloud.CryptoInformer.Application.Helpers.Enums;
-
-namespace DigitalCloud.CryptoInformer.Application.Models.Requests;
+﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests;
 
 public record GetCurrenciesListRequest(
     int ItemsPerPage,
     int NumberOfPage,
-    MarketCurrenciesOrder CurrencyListOrder,
-    MarketCurrencies Currency,
-    ApiLocale Locale);
+    string CurrencyListOrder,
+    string Currency,
+    string Locale,
+    string CurrenciesPricePresision,
+    string TimeFrame);
 

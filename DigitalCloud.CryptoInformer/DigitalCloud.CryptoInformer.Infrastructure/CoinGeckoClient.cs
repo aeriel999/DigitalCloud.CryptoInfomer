@@ -15,11 +15,11 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
 		{
 			var result = await httpClient.GetFromJsonAsync<List<CurrencyInfoResponse>>(
                 $"{url}?" +
-				$"vs_currency={reuest.Currency.ToString()}"+
-				$"&order={reuest.CurrencyListOrder.ToString()}"+
+				$"vs_currency={reuest.Currency}"+
+				$"&order={reuest.CurrencyListOrder}"+
 				$"&per_page={reuest.ItemsPerPage}"+
 				$"&page={reuest.NumberOfPage}"+
-				$"&locale={reuest.Locale.ToString()}");
+				$"&locale={reuest.Locale}");
 
 			if (result == null) throw new Exception("Empty list");
 
