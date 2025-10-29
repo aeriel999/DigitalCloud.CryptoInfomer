@@ -12,6 +12,9 @@
 **/*.userosscache
 **/*.sln.docstates
 
+# Ignore appsettings files
+appsettings.json
+appsettings.*.json
 
 # Build results
 [Dd]ebug/

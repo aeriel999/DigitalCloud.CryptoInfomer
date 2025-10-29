@@ -1,7 +1,6 @@
 ﻿using DigitalCloud.CryptoInformer.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
 using System.Net.Http;
 using System.Windows;
 
@@ -14,15 +13,15 @@ namespace DigitalCloud.CryptoInfomer.UI
     {
         public App()
         {
-            Services = ConfigureServices();
-
             this.InitializeComponent();
 
             var builder = new ConfigurationBuilder()
-                     .SetBasePath(Directory.GetCurrentDirectory())
+                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
+
+            Services = ConfigureServices();
         }
 
         /// <summary>
