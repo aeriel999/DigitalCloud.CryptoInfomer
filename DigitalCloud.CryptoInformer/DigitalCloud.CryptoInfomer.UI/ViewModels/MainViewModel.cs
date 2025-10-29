@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
 using DigitalCloud.CryptoInformer.Application.Models.Response;
+using System.Collections.ObjectModel;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
 
@@ -10,7 +11,7 @@ public partial class MainViewModel : ObservableObject
     private readonly ICoinGeckoClient _coinGeckoClient;
 
     [ObservableProperty]
-    private List<CurrencyInfoResponse>? _currencies;
+    private ObservableCollection<CurrencyInfoResponse> _currencies = new();
 
     [ObservableProperty]
     private bool _isLoading;
@@ -35,7 +36,9 @@ public partial class MainViewModel : ObservableObject
                 
                 return;
             }
-            Currencies = result.Value;
+             
+            foreach (var item in result.Value)
+                Currencies.Add(item);
         }
         finally { IsLoading = false; }
     }

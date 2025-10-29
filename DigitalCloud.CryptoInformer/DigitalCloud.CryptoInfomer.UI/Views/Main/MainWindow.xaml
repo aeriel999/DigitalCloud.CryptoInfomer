@@ -92,33 +92,24 @@
 		</Grid>
 	   
 		<Grid Grid.Row="2" Height="Auto" VerticalAlignment="Stretch">
-            <DataGrid ItemsSource="{Binding CurrencyInfoResponses}"
-          AutoGenerateColumns="False"
-          HeadersVisibility="Column"
-          IsReadOnly="True"
-          RowHeight="40"
-          GridLinesVisibility="None"
-          Background="Transparent">
-
+            <DataGrid ItemsSource="{Binding Currencies}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" Binding="{Binding MarketCapRank}" Width="40"/>
                     <DataGridTemplateColumn Header="Coin" Width="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding CurrencyIconImageLink}"
-                               Width="24" Height="24"/>
-                                    <TextBlock Text="{Binding CurrencyName}" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding CurrencySymbol}" Foreground="Gray" Margin="4,0,0,0"/>
+                                <StackPanel Orientation="Horizontal" Margin="5,0">
+                                    <Image Source="{Binding CurrencyIconImageLink}" Width="24" Height="24"/>
+                                    <TextBlock Text="{Binding CurrencyName}" FontWeight="Bold" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{Binding CurrencySymbol}" Foreground="Gray" Margin="6,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
-                    <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice, StringFormat={}{0:C2}}" Width="100"/>
-                    <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap, StringFormat={}{0:N0}}" Width="140"/>
-                    <DataGridTextColumn Header="Volume (24h)" Binding="{Binding TotalVolume, StringFormat={}{0:N0}}" Width="140"/>
-                    <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}%}" Width="100"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice}" Width="100"/>
+                    <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap}" Width="140"/>
+                    <DataGridTextColumn Header="Volume (24h)" Binding="{Binding TotalVolume}" Width="140"/>
+                    <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="110"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
