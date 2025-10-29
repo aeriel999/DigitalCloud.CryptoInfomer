@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ErrorOr" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DigitalCloud.CryptoInformer.Application\DigitalCloud.CryptoInformer.Application.csproj" />
   </ItemGroup>
 
