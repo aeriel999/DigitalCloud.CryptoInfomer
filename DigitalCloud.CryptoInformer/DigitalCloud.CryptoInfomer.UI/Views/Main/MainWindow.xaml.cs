@@ -25,6 +25,11 @@ public partial class MainWindow : Window
         DataContext = App.Current.Services.GetService<MainViewModel>();
     }
 
-    
-      
+    private void ThemeSwitch_Click(object sender, RoutedEventArgs e)
+    {
+        bool isDark = ThemeSwitch.IsChecked == true;
+        // switch the theme
+    }
+
+
 }

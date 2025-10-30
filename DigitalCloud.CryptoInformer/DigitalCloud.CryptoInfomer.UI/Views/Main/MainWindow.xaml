@@ -8,7 +8,45 @@
 		Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
 		Title="DigitalCloud.CryptoInfomer" Height="700" Width="1000"
 		ThemeMode="Light">
-	<Grid>
+    <Window.Resources>
+        <!-- Switch style -->
+        <Style x:Key="SwitchToggleStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Background" Value="#E5E5E5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <!-- трек -->
+                            <Border x:Name="Track"
+                                CornerRadius="14"
+                                Background="{TemplateBinding Background}"/>
+                            <!-- кружок -->
+                            <Border x:Name="Thumb"
+                                Width="15" Height="15"
+                                CornerRadius="10"
+                                Background="White"
+                                Margin="2"
+                                HorizontalAlignment="Left"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Track" Property="Background" Value="#4BA3E3"/>
+                                <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Track" Property="Opacity" Value="0.4"/>
+                                <Setter TargetName="Thumb" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
 		<!--Header-->
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"></RowDefinition>
@@ -45,17 +83,18 @@
 				  VerticalAlignment="Center">
 				  <Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"></ColumnDefinition>
-					<ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
 				</Grid.ColumnDefinitions>
 
 				<Grid  HorizontalAlignment="Right" Margin="0,0,15,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="1*"></ColumnDefinition>
-						<ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
 					</Grid.ColumnDefinitions>
 				   
 					<!--<TextBox />-->
-					<TextBlock Grid.Column="1" 
+					<TextBlock  
 								VerticalAlignment="Center"
 								FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
 								Text="&#xE721;"/>           
@@ -69,10 +108,23 @@
 					<ComboBoxItem Content="EN" />
 					<ComboBoxItem Content="UA" />
 				</ComboBox>
-			</Grid>
+
+                <!--<TextBlock VerticalAlignment="Center" 
+                           Margin="10"
+                           Grid.Column="2"
+                           FontFamily="{StaticResource SymbolThemeFontFamily}" 
+                           Text="&#xE793;"/>-->
+                <ToggleButton Style="{StaticResource SwitchToggleStyle}"
+                              Grid.Column="2"
+							  x:Name="ThemeSwitch"
+							  Margin="8"
+							  Click="ThemeSwitch_Click"/>
+            </Grid>
 		</Grid>
 	   
-		<Grid Grid.Row="1" Height="Auto" VerticalAlignment="Stretch">
+		<Grid Grid.Row="1" Height="Auto" 
+              VerticalAlignment="Stretch"
+              Background="#4BA3E3">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
