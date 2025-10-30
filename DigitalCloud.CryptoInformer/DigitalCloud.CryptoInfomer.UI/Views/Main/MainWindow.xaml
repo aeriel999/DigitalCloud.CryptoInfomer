@@ -135,12 +135,13 @@
                     Content="Top 10" 
                     HorizontalAlignment="Center"
                     Click="Top_10_Button_Click"
-                    Command="{Binding LoadCurrenciesCommand}" />
+                    Command="{Binding LoadFirstPartOfCurrenciesCommand}" />
             <Button x:Name="Top_100_Button"
                     Grid.Column="1" 
                     Content="Top 100"
                     HorizontalAlignment="Center"
-                    Click="Top_100_Button_Click"/>
+                    Click="Top_100_Button_Click"
+                    Command="{Binding LoadFirstPartOfCurrenciesCommand}"/>
             <Button x:Name="All_Button"
                     Grid.Column="2" 
                     Content="All" 

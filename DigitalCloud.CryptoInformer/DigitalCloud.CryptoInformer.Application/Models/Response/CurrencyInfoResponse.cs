@@ -5,7 +5,7 @@ namespace DigitalCloud.CryptoInformer.Application.Models.Response;
 public class CurrencyInfoResponse
 {
     [JsonPropertyName("market_cap_rank")]
-    public int MarketCapRank { get; set; }
+    public int? MarketCapRank { get; set; }
 
     [JsonPropertyName("id")]
     public required string CurrencyId { get; set; }
