@@ -6,7 +6,13 @@
 		xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
 		mc:Ignorable="d"
 		Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-		Title="DigitalCloud.CryptoInfomer" Height="700" Width="1000"
+		Title="DigitalCloud.CryptoInfomer" 
+        Height="700" 
+        MinHeight="500"
+        MaxHeight="1000"
+        Width="1000" 
+        MinWidth="800"
+        MaxWidth="1500"
 		ThemeMode="Light">
     <Window.Resources>
         <!-- Switch style -->
@@ -19,11 +25,11 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
                         <Grid>
-                            <!-- трек -->
+                            <!-- track -->
                             <Border x:Name="Track"
                                 CornerRadius="14"
                                 Background="{TemplateBinding Background}"/>
-                            <!-- кружок -->
+                            <!-- circle -->
                             <Border x:Name="Thumb"
                                 Width="15" Height="15"
                                 CornerRadius="10"
@@ -47,20 +53,19 @@
         </Style>
     </Window.Resources>
     <Grid>
-		<!--Header-->
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"></RowDefinition>
 			<RowDefinition Height="1*"></RowDefinition>
 			<RowDefinition Height="7*"></RowDefinition>
 		</Grid.RowDefinitions>
-		
-		<Grid VerticalAlignment="Stretch">
+        <!--Header-->
+        <Grid VerticalAlignment="Stretch">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-
+            <!--Menu-->
 			<Menu HorizontalAlignment="Left" VerticalAlignment="Center">
 				<MenuItem Header="Home">
 				</MenuItem>
@@ -69,7 +74,7 @@
 				<MenuItem Header="About">
 				</MenuItem>
 			</Menu>
-			
+			<!--Logo-->
 			<Image Grid.Column="1" 
 				Source="/Assets/Images/logo_4.png"
 				Height="auto"
@@ -77,29 +82,28 @@
 				Margin="0, 15, 0, 15"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Center"/>
-
+			<!--Additional Block-->
 			<Grid Grid.Column="2" 
 				  HorizontalAlignment="Right" 
 				  VerticalAlignment="Center">
-				  <Grid.ColumnDefinitions>
+				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
 				</Grid.ColumnDefinitions>
-
-				<Grid  HorizontalAlignment="Right" Margin="0,0,15,0">
+				<!--Search-->
+				<Grid HorizontalAlignment="Right" Margin="0,0,15,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
 					</Grid.ColumnDefinitions>
-				   
 					<!--<TextBox />-->
 					<TextBlock  
 								VerticalAlignment="Center"
 								FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
 								Text="&#xE721;"/>           
 				</Grid>
-				
+                <!--Localization-->
 				<ComboBox Width="auto" 
 						  Grid.Column="1"
 						  HorizontalAlignment="Left" 
@@ -108,12 +112,7 @@
 					<ComboBoxItem Content="EN" />
 					<ComboBoxItem Content="UA" />
 				</ComboBox>
-
-                <!--<TextBlock VerticalAlignment="Center" 
-                           Margin="10"
-                           Grid.Column="2"
-                           FontFamily="{StaticResource SymbolThemeFontFamily}" 
-                           Text="&#xE793;"/>-->
+                <!--Theme switcher-->
                 <ToggleButton Style="{StaticResource SwitchToggleStyle}"
                               Grid.Column="2"
 							  x:Name="ThemeSwitch"
@@ -121,7 +120,7 @@
 							  Click="ThemeSwitch_Click"/>
             </Grid>
 		</Grid>
-	   
+        <!--Buttons bar -->
 		<Grid Grid.Row="1" Height="Auto" 
               VerticalAlignment="Stretch"
               Background="#4BA3E3">
@@ -142,28 +141,71 @@
 				<ComboBoxItem Content="Market 3" />
 			</ComboBox>
 		</Grid>
-	   
-		<Grid Grid.Row="2" Height="Auto" VerticalAlignment="Stretch">
-            <DataGrid ItemsSource="{Binding Currencies}" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Binding="{Binding MarketCapRank}" Width="40"/>
-                    <DataGridTemplateColumn Header="Coin" Width="200">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="5,0">
-                                    <Image Source="{Binding CurrencyIconImageLink}" Width="24" Height="24"/>
-                                    <TextBlock Text="{Binding CurrencyName}" FontWeight="Bold" Margin="8,0,0,0"/>
-                                    <TextBlock Text="{Binding CurrencySymbol}" Foreground="Gray" Margin="6,0,0,0"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice}" Width="100"/>
-                    <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap}" Width="140"/>
-                    <DataGridTextColumn Header="Volume (24h)" Binding="{Binding TotalVolume}" Width="140"/>
-                    <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="110"/>
-                </DataGrid.Columns>
-            </DataGrid>
+        <!--Main content-->
+        <Grid Grid.Row="2"
+              HorizontalAlignment="Center"
+			  VerticalAlignment="Stretch">
+              <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid Grid.Column="1"
+                              Background="White"
+                              ItemsSource="{Binding Currencies}" 
+                              AutoGenerateColumns="False"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              CanUserAddRows="False"
+                              GridLinesVisibility="Horizontal"
+                              VerticalContentAlignment="Center">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="4,6"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <!-- # -->
+                        <DataGridTextColumn Header="#" 
+                                            Binding="{Binding MarketCapRank}" 
+                                            Width="50"/>
+                        <!-- Coin -->
+                        <DataGridTemplateColumn Header="Coin" Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                                        <!-- Icon -->
+                                        <Image Source="{Binding CurrencyIconImageLink}"
+                                               Width="32"
+                                               Height="32"
+                                               Stretch="Uniform"
+                                               VerticalAlignment="Center"/>
+                                        <!-- Title -->
+                                        <StackPanel Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding CurrencyName}"
+                                                       FontWeight="Bold"
+                                                       FontSize="14"/>
+                                            <TextBlock Text="{Binding CurrencySymbol}"
+                                                       FontSize="11"
+                                                       Foreground="#808080"
+                                                       TextWrapping="NoWrap"
+                                                        />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!-- Other information -->
+                        <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice}" Width="*"/>
+                        <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap}" Width="*"/>
+                        <DataGridTextColumn Header="Volume (24h)" Binding="{Binding TotalVolume}" Width="*"/>
+                        <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                </Grid>
         </Grid>
 	</Grid>
 </Window>
