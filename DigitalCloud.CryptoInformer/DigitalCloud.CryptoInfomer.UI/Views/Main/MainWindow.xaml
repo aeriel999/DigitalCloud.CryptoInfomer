@@ -128,13 +128,28 @@
 				<ColumnDefinition Width="1*"></ColumnDefinition>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
 				<ColumnDefinition Width="1*"></ColumnDefinition>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="2*"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 			<!--<Button Content="Top 10" />-->
-            <Button Content="Load" Command="{Binding LoadCurrenciesCommand}" />
-            <Button Grid.Column="1" Content="Top 100" />
-			<Button Grid.Column="2" Content="All" />
-			<ComboBox Grid.Column="3" MinWidth="200" HorizontalAlignment="Left" SelectedIndex="0">
+            <Button x:Name="Top_10_Button"
+                    Content="Top 10" 
+                    HorizontalAlignment="Center"
+                    Click="Top_10_Button_Click"
+                    Command="{Binding LoadCurrenciesCommand}" />
+            <Button x:Name="Top_100_Button"
+                    Grid.Column="1" 
+                    Content="Top 100"
+                    HorizontalAlignment="Center"
+                    Click="Top_100_Button_Click"/>
+            <Button x:Name="All_Button"
+                    Grid.Column="2" 
+                    Content="All" 
+                    HorizontalAlignment="Center"
+                    Click="All_Button_Click"/>
+			<ComboBox Grid.Column="3" 
+                      MinWidth="200" 
+                      HorizontalAlignment="Center" 
+                      SelectedIndex="0">
 				<ComboBoxItem Content="All markets" />
 				<ComboBoxItem Content="Market 1" />
 				<ComboBoxItem Content="Market 2" />

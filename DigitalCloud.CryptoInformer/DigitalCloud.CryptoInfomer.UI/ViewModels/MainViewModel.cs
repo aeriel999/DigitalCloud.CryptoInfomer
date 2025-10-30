@@ -13,49 +13,28 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<CurrencyInfoResponse> _currencies = new();
 
-    [ObservableProperty]
-    private bool _isLoading;
-
     public MainViewModel(ICoinGeckoClient coinGeckoClient)
     {
         _coinGeckoClient = coinGeckoClient;
 
         LoadCurrenciesCommand = new AsyncRelayCommand(LoadCurrenciesAsync);
+
+        //_ = LoadCurrenciesAsync();
     }
 
     public IAsyncRelayCommand LoadCurrenciesCommand { get; }
 
     private async Task LoadCurrenciesAsync()
     {
-        try
+        var result = await _coinGeckoClient.GetListOfCurrenciesAsync();
+        if (result.IsError)
         {
-            IsLoading = true;
-            var result = await _coinGeckoClient.GetListOfCurrenciesAsync(); 
-            if (result.IsError)
-            {
-                
-                return;
-            }
-             
-            foreach (var item in result.Value)
-                Currencies.Add(item);
+
+            return;
         }
-        finally { IsLoading = false; }
+
+        foreach (var item in result.Value)
+            Currencies.Add(item);
     }
-
-    //private TaskNotifier<ErrorOr<List<CurrencyInfoResponse>>> currencyInfoResponses;
-
-    //public Task<ErrorOr<List<CurrencyInfoResponse>>>? CurrencyInfoResponses
-    //{
-    //    get => currencyInfoResponses;
-    //    set => SetPropertyAndNotifyOnCompletion(ref currencyInfoResponses, value);
-    //}
-
-    //public void RequestValue()
-    //{
-    //    CurrencyInfoResponses = coinGeckoClient.GetListOfCurrenciesAsync();
-
-    //    var res = CurrencyInfoResponses.Result
-    //}
 }
 
