@@ -56,8 +56,10 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"></RowDefinition>
 			<RowDefinition Height="1*"></RowDefinition>
-			<RowDefinition Height="7*"></RowDefinition>
-		</Grid.RowDefinitions>
+			<RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+
+        </Grid.RowDefinitions>
         <!--Header-->
         <Grid VerticalAlignment="Stretch">
 			<Grid.ColumnDefinitions>
@@ -207,8 +209,7 @@
                                             <TextBlock Text="{Binding CurrencySymbol}"
                                                        FontSize="11"
                                                        Foreground="#808080"
-                                                       TextWrapping="NoWrap"
-                                                        />
+                                                       TextWrapping="NoWrap" />
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
@@ -221,7 +222,16 @@
                         <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                </Grid>
+              </Grid>
+        </Grid>
+        <!--More Button-->
+        <Grid Grid.Row="3">
+            <Button x:Name="MoreBtn"
+                    Style="{DynamicResource AccentButtonStyle}" 
+                    Content="More"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="20"/>
         </Grid>
 	</Grid>
 </Window>
