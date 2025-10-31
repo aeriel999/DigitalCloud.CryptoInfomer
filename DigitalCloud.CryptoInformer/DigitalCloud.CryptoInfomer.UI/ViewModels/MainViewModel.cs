@@ -62,6 +62,7 @@ public partial class MainViewModel : ObservableObject
             return;
 
         var detailsWindow = new CoinDetailsWindow(coinId);
+
         detailsWindow.Show();
     }
 
@@ -138,7 +139,8 @@ public partial class MainViewModel : ObservableObject
                                      Currency: MarketCurrencies.USD,
                                      Locale: ApiLocale.EN,
                                      CurrenciesPricePresision: CurrencyPricePrecision.P2,
-                                     TimeFrame: TimeFramesForPriceChangePercentage.H24);
+                                     TimeFrame: TimeFramesForPriceChangePercentage.H24, 
+                                     IncludeSparkline: false);
 
         var result = await _coinGeckoClient.GetListOfCurrenciesAsync(_currentRequest);
 

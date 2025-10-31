@@ -7,5 +7,6 @@ public record GetCurrenciesListRequest(
     string Currency,
     string Locale,
     string CurrenciesPricePresision,
-    string TimeFrame);
+    string TimeFrame,
+    bool IncludeSparkline);
 

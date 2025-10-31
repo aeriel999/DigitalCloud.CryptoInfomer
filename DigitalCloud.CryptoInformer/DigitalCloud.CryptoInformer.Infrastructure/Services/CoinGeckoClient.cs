@@ -21,7 +21,7 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
 				$"&order={request.CurrencyListOrder}" +
 				$"&per_page={request.ItemsPerPage}" +
 				$"&page={request.NumberOfPage}" +
-                "&sparkline=false" +
+                $"&sparkline={request.IncludeSparkline}" +
                 $"&price_change_percentage={request.TimeFrame}" +
 				$"&locale={request.Locale}" +
 				$"&precision={request.CurrenciesPricePresision}");
@@ -65,6 +65,48 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
                 "&page=1" +
                 "&sparkline=false" +
                 "&price_change_percentage=24h");
+
+            if (result == null)
+                return Error.NotFound(
+                          code: "Empty.Result",
+                          description: LocalizationHelper.Get("EmptyResult"));
+
+            return result;
+        }
+        catch (HttpRequestException)
+        {
+            return Error.Failure(
+                   code: "Network.Error",
+                   description: LocalizationHelper.Get("NetworkError"));
+        }
+        catch (JsonException)
+        {
+            return Error.Failure(
+                    code: "Json.ParseError",
+                    description: LocalizationHelper.Get("JsonParseError"));
+        }
+        catch (Exception)
+        {
+            return Error.Failure(
+                    code: "General.Failure",
+                    description: LocalizationHelper.Get("GeneralFailure"));
+        }
+    }
+
+    public async Task<ErrorOr<GetCoinDetailsResponse>> GetDetailsInformationForCoinAsync(
+        GetCoinDetailsRequest request)
+    {
+        try
+        {
+            var result = await httpClient.GetFromJsonAsync<GetCoinDetailsResponse>(
+                $"{url}/coins/" +
+                $"{request.CoinId}" +
+                $"?localization={request.IncludeLocalization}" +
+                $" &tickers={request.IncludeTickers}" +
+                $"&market_data={request.IncludeMarketData}"+
+                $"&community_data={request.IncludeCommunityData}"+
+                $"&developer_data={request.IncludeDeveloperData}"+
+                $"&sparkline={request.IncludeSparkline}");
 
             if (result == null)
                 return Error.NotFound(
