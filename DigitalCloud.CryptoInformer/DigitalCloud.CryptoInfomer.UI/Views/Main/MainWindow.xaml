@@ -53,67 +53,67 @@
         </Style>
     </Window.Resources>
     <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="1*"></RowDefinition>
-			<RowDefinition Height="1*"></RowDefinition>
-			<RowDefinition Height="6*"></RowDefinition>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
 
         </Grid.RowDefinitions>
         <!--Header-->
         <Grid VerticalAlignment="Stretch">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <!--Menu-->
-			<Menu HorizontalAlignment="Left" VerticalAlignment="Center">
-				<MenuItem Header="Home">
-				</MenuItem>
-				<MenuItem Header="Exchanges">
-				</MenuItem>
-				<MenuItem Header="About">
-				</MenuItem>
-			</Menu>
-			<!--Logo-->
-			<Image Grid.Column="1" 
+            <Menu HorizontalAlignment="Left" VerticalAlignment="Center">
+                <MenuItem Header="Home">
+                </MenuItem>
+                <MenuItem Header="Exchanges">
+                </MenuItem>
+                <MenuItem Header="About">
+                </MenuItem>
+            </Menu>
+            <!--Logo-->
+            <Image Grid.Column="1" 
 				Source="/Assets/Images/logo_4.png"
 				Height="auto"
 				MinHeight="20"
 				Margin="0, 15, 0, 15"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Center"/>
-			<!--Additional Block-->
-			<Grid Grid.Column="2" 
+            <!--Additional Block-->
+            <Grid Grid.Column="2" 
 				  HorizontalAlignment="Right" 
 				  VerticalAlignment="Center">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"></ColumnDefinition>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<!--Search-->
-				<Grid HorizontalAlignment="Right" Margin="0,0,15,0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--Search-->
+                <Grid HorizontalAlignment="Right" Margin="0,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-					</Grid.ColumnDefinitions>
-					<!--<TextBox />-->
-					<TextBlock  
+                    </Grid.ColumnDefinitions>
+                    <!--<TextBox />-->
+                    <TextBlock  
 								VerticalAlignment="Center"
 								FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
-								Text="&#xE721;"/>           
-				</Grid>
+								Text="&#xE721;"/>
+                </Grid>
                 <!--Localization-->
-				<ComboBox Width="auto" 
+                <ComboBox Width="auto" 
 						  Grid.Column="1"
 						  HorizontalAlignment="Left" 
 						  SelectedIndex="0"
 						  Margin="10">
-					<ComboBoxItem Content="EN" />
-					<ComboBoxItem Content="UA" />
-				</ComboBox>
+                    <ComboBoxItem Content="EN" />
+                    <ComboBoxItem Content="UA" />
+                </ComboBox>
                 <!--Theme switcher-->
                 <ToggleButton Style="{StaticResource SwitchToggleStyle}"
                               Grid.Column="2"
@@ -121,18 +121,18 @@
 							  Margin="8"
 							  Click="ThemeSwitch_Click"/>
             </Grid>
-		</Grid>
+        </Grid>
         <!--Buttons bar -->
-		<Grid Grid.Row="1" Height="Auto" 
+        <Grid Grid.Row="1" Height="Auto" 
               VerticalAlignment="Stretch"
               Background="#4BA3E3">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
-				<ColumnDefinition Width="1*"></ColumnDefinition>
-				<ColumnDefinition Width="2*"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
-			<!--<Button Content="Top 10" />-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--<Button Content="Top 10" />-->
             <Button x:Name="Top_10_Button"
                     Content="Top 10" 
                     HorizontalAlignment="Center"
@@ -151,27 +151,27 @@
                     Click="All_Button_Click"
                     Command="{Binding SetAllListModeCommand}"/>
             <!--ComboBox With platforms-->
-			<ComboBox Grid.Column="3" 
+            <ComboBox Grid.Column="3" 
                       MinWidth="200" 
                       HorizontalAlignment="Center" 
                       SelectedIndex="0">
-				<ComboBoxItem Content="All markets" />
-				<ComboBoxItem Content="Market 1" />
-				<ComboBoxItem Content="Market 2" />
-				<ComboBoxItem Content="Market 3" />
-			</ComboBox>
-		</Grid>
+                <ComboBoxItem Content="All markets" />
+                <ComboBoxItem Content="Market 1" />
+                <ComboBoxItem Content="Market 2" />
+                <ComboBoxItem Content="Market 3" />
+            </ComboBox>
+        </Grid>
         <!--Main content-->
         <Grid Grid.Row="2"
               HorizontalAlignment="Center"
 			  VerticalAlignment="Stretch">
-              <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="8*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <DataGrid Grid.Column="1"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="1"
                               Background="White"
                               ItemsSource="{Binding Currencies}" 
                               AutoGenerateColumns="False"
@@ -224,16 +224,26 @@
                         <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-              </Grid>
+            </Grid>
         </Grid>
         <!--More Button-->
         <Grid Grid.Row="3">
             <Button x:Name="MoreBtn"
-                    Style="{DynamicResource AccentButtonStyle}" 
                     Content="More"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="20"/>
+                    Command="{Binding LoadNextPartForCurenciesListCommand}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMoreBtnVisible}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
-	</Grid>
+    </Grid>
 </Window>

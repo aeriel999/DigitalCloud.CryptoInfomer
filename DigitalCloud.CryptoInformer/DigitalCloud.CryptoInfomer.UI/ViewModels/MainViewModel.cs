@@ -22,11 +22,16 @@ public partial class MainViewModel : ObservableObject
     private int? _amountOfPage;
     private int _numberOfPage;
 
+    [ObservableProperty]
+    private bool isMoreBtnVisible;
+
     public MainViewModel(ICoinGeckoClient coinGeckoClient)
     {
         _coinGeckoClient = coinGeckoClient;
 
-        _numberOfPage = 1;
+        IsMoreBtnVisible = false;
+
+         _numberOfPage = 1;
 
         _amountOfPage = 1;
 
@@ -34,15 +39,18 @@ public partial class MainViewModel : ObservableObject
 
        // _ = InitialLoadCurrenciesAsync();
 
-        SetTop10ModeCommand = new AsyncRelayCommand(SetTop10Mode);
-        SetTop100ModeCommand = new AsyncRelayCommand(SetTop100Mode);
-        SetAllListModeCommand = new AsyncRelayCommand(SetAllListMode);
+        SetTop10ModeCommand = new AsyncRelayCommand(SetTop10ModeAsync);
+        SetTop100ModeCommand = new AsyncRelayCommand(SetTop100ModeAsync);
+        SetAllListModeCommand = new AsyncRelayCommand(SetAllListModeAsync);
+        LoadNextPartForCurenciesListCommand = new AsyncRelayCommand(LoadNextPartForCurenciesListAsync);
     }
 
     public IAsyncRelayCommand InitialLoadCurrenciesCommand { get; }
     public IAsyncRelayCommand SetTop10ModeCommand { get; }
     public IAsyncRelayCommand SetTop100ModeCommand { get; }
     public IAsyncRelayCommand SetAllListModeCommand { get; }
+    public IAsyncRelayCommand LoadNextPartForCurenciesListCommand { get; }
+
 
     private async Task InitialLoadCurrenciesAsync()
     {
@@ -57,26 +65,36 @@ public partial class MainViewModel : ObservableObject
             Currencies.Add(item);
     }
 
-    private async Task SetTop10Mode()
+    private async Task SetTop10ModeAsync()
     {
         _numberOfPage = 1;
         _amountOfPage = 1;
+        IsMoreBtnVisible = false;
 
         await LoadFirstTop10CurrenciesAsync();
     }
 
-    private async Task SetTop100Mode()
+    private async Task SetTop100ModeAsync()
     {
         _numberOfPage = 1;
         _amountOfPage = 10;
+        IsMoreBtnVisible = true;
 
         await LoadFirstTop10CurrenciesAsync();
     }
 
-    private async Task SetAllListMode()
+    private async Task SetAllListModeAsync()
     {
         _numberOfPage = 1;
         _amountOfPage = null;
+        IsMoreBtnVisible = true;
+
+        await LoadFirstTop10CurrenciesAsync();
+    }
+
+    private async Task LoadNextPartForCurenciesListAsync()
+    {
+        _numberOfPage++;
 
         await LoadFirstTop10CurrenciesAsync();
     }
@@ -86,7 +104,11 @@ public partial class MainViewModel : ObservableObject
         //Logic for first page load (Top10/Top100/All)
         if (_numberOfPage == 1)
             Currencies.Clear();
-        
+        // Hide "More" button after loading all Top100 pages
+        else if (_amountOfPage != null && _numberOfPage == _amountOfPage)
+            IsMoreBtnVisible = false;
+
+
         var _currentRequest = new GetCurrenciesListRequest(
                                      ItemsPerPage: ITEM_PER_PAGE,
                                      NumberOfPage: _numberOfPage,

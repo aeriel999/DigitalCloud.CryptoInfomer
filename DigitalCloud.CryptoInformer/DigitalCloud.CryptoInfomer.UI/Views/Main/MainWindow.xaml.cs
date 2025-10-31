@@ -30,8 +30,6 @@ public partial class MainWindow : Window
 
         Top_10_Button.Style = _accentStyle;
 
-        MoreBtn.Visibility = Visibility.Hidden;
-
         DataContext = App.Current.Services.GetService<MainViewModel>();
     }
 
@@ -51,8 +49,6 @@ public partial class MainWindow : Window
 
         Top_100_Button.Style = _defaultStyle;
         All_Button.Style = _defaultStyle;
-
-        MoreBtn.Visibility = Visibility.Hidden;
     }
 
     private void Top_100_Button_Click(object sender, RoutedEventArgs e)
@@ -65,8 +61,6 @@ public partial class MainWindow : Window
 
         Top_10_Button.Style = _defaultStyle;
         All_Button.Style = _defaultStyle;
-
-        MoreBtn.Visibility = Visibility.Visible;
     }
 
     private void All_Button_Click(object sender, RoutedEventArgs e)
@@ -79,7 +73,5 @@ public partial class MainWindow : Window
 
         Top_100_Button.Style = _defaultStyle;
         Top_10_Button.Style = _defaultStyle;
-
-        MoreBtn.Visibility = Visibility.Visible;
     }
 }
