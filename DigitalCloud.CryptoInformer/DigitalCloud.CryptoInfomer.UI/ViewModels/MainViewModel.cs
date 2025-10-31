@@ -120,9 +120,9 @@ public partial class MainViewModel : ObservableObject
         // Hide "More" button after loading all Top100 pages
         else if (_amountOfPage != null && _numberOfPage == _amountOfPage)
             IsMoreBtnVisible = false;
+       
 
-
-        var _currentRequest = new GetCurrenciesListRequest(
+            var _currentRequest = new GetCurrenciesListRequest(
                                      ItemsPerPage: ITEM_PER_PAGE,
                                      NumberOfPage: _numberOfPage,
                                      CurrencyListOrder: MarketCurrenciesOrder.MARKET_CAP_DESC,
@@ -136,7 +136,11 @@ public partial class MainViewModel : ObservableObject
         if (result.IsError)
             return;
 
-        foreach (var item in result.Value)
+         // Hide "More" button after loading all Top100 pages
+         if (_amountOfPage == null && result.Value.Count < ITEM_PER_PAGE)
+                 IsMoreBtnVisible = false;
+
+            foreach (var item in result.Value)
             Currencies.Add(item);
         }
         finally { IsLoading = false; }
