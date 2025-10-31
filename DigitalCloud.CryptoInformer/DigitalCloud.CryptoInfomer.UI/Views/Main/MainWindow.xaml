@@ -72,26 +72,25 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <DataGrid Grid.Column="1"
-                              Background="White"
-                              ItemsSource="{Binding Currencies}" 
-                              AutoGenerateColumns="False"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              CanUserAddRows="False"
-                              GridLinesVisibility="Horizontal"
-                              VerticalContentAlignment="Center">
+                          Background="White"
+                          ItemsSource="{Binding Currencies}" 
+                          AutoGenerateColumns="False"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          CanUserAddRows="False"
+                          GridLinesVisibility="Horizontal"
+                          VerticalContentAlignment="Center">
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell">
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            <Setter Property="Padding" Value="4,6"/>
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <!-- # -->
                         <DataGridTextColumn Header="#" 
                                             Binding="{Binding MarketCapRank}" 
-                                            Width="50"/>
+                                            Width="40"/>
                         <!-- Coin -->
                         <DataGridTemplateColumn Header="Coin" Width="2*">
                             <DataGridTemplateColumn.CellTemplate>
@@ -119,21 +118,26 @@
                         </DataGridTemplateColumn>
                         <!-- Other information -->
                         <DataGridTextColumn Header="Price" 
-                                            Binding="{Binding CurrentPrice}" Width="*"/>
+                                            Binding="{Binding CurrentPrice}" Width="1*"/>
                         <DataGridTextColumn Header="Market Cap" 
-                                            Binding="{Binding MarketCap}" Width="*"/>
+                                            Binding="{Binding MarketCap}" Width="2*"/>
                         <DataGridTextColumn Header="Volume (24h)" 
-                                            Binding="{Binding TotalVolume}" Width="*"/>
+                                            Binding="{Binding TotalVolume}" Width="2*"/>
                         <DataGridTextColumn Header="Change (24h %)" 
-                                            Binding="{Binding PriceChangePercentage24h}" Width="*"/>
+                                            Binding="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}}"
+                                            Width="1*"/>
                         <!--Details BTN-->
-                        <DataGridTemplateColumn Header="Actions" Width="Auto">
+                        <DataGridTemplateColumn Header="" Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Details"
+                                    <Button Content="Detail"
                                             Padding="6,2"
-                                            Command="{Binding DataContext.OpenCoinDetailsCommand, 
-                                            RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            Margin="4,0"
+                                            HorizontalAlignment="Center"
+                                            Style="{StaticResource AccentButtonStyle}"
+                                            Command="{Binding DataContext.OpenCoinDetailsCommand,
+                                                              RelativeSource={RelativeSource 
+                                                              AncestorType=DataGrid}}"
                                             CommandParameter="{Binding CurrencyId}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
