@@ -121,7 +121,6 @@ public partial class MainViewModel : ObservableObject
         else if (_amountOfPage != null && _numberOfPage == _amountOfPage)
             IsMoreBtnVisible = false;
        
-
             var _currentRequest = new GetCurrenciesListRequest(
                                      ItemsPerPage: ITEM_PER_PAGE,
                                      NumberOfPage: _numberOfPage,
