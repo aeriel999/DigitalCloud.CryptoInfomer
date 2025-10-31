@@ -6,6 +6,7 @@ using DigitalCloud.CryptoInformer.Application.Interfaces;
 using DigitalCloud.CryptoInformer.Application.Models.Requests;
 using DigitalCloud.CryptoInformer.Application.Models.Response;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
 
@@ -13,37 +14,33 @@ public partial class MainViewModel : ObservableObject
 {
     private readonly ICoinGeckoClient _coinGeckoClient;
 
-
     [ObservableProperty]
     private ObservableCollection<CurrencyInfoResponse> _currencies = new();
 
+    private const int ITEM_PER_PAGE = 10;
 
-    private GetCurrenciesListRequest _currentRequest;
+    private int? _amountOfPage;
+    private int _numberOfPage;
 
     public MainViewModel(ICoinGeckoClient coinGeckoClient)
     {
         _coinGeckoClient = coinGeckoClient;
 
-        _currentRequest = new(
-                                    ItemsPerPage: 11,
-                                    NumberOfPage: 1,
-                                    CurrencyListOrder: MarketCurrenciesOrder.MARKET_CAP_DESC,
-                                    Currency: MarketCurrencies.USD,
-                                    Locale: ApiLocale.EN,
-                                    CurrenciesPricePresision: CurrencyPricePrecision.P2,
-                                    TimeFrame: TimeFramesForPriceChangePercentage.H24);
+        _numberOfPage = 1;
 
-        LoadCurrenciesCommand = new AsyncRelayCommand(LoadCurrenciesAsync);
+        _amountOfPage = 1;
 
-        LoadFirstPartOfCurrenciesCommand = new AsyncRelayCommand(LoadFirstTop10CurrenciesAsync);
+        InitialLoadCurrenciesCommand = new AsyncRelayCommand(InitialLoadCurrenciesAsync);
 
-        //_ = LoadCurrenciesAsync();
+       // _ = InitialLoadCurrenciesAsync();
+
+        SetTop10ModeCommand = new AsyncRelayCommand(SetTop10Mode);
     }
 
-    public IAsyncRelayCommand LoadCurrenciesCommand { get; }
-    public IAsyncRelayCommand LoadFirstPartOfCurrenciesCommand { get; }
+    public IAsyncRelayCommand InitialLoadCurrenciesCommand { get; }
+    public IAsyncRelayCommand SetTop10ModeCommand { get; }
 
-    private async Task LoadCurrenciesAsync()
+    private async Task InitialLoadCurrenciesAsync()
     {
         var result = await _coinGeckoClient.GetListOfCurrenciesAsync();
         if (result.IsError)
@@ -56,16 +53,29 @@ public partial class MainViewModel : ObservableObject
             Currencies.Add(item);
     }
 
+    private async Task SetTop10Mode()
+    { 
+        _numberOfPage = 1;
+        _amountOfPage = 1;
+
+        await LoadFirstTop10CurrenciesAsync();
+    }
     private async Task LoadFirstTop10CurrenciesAsync()
     {
-        Currencies.Clear();
+        if (_amountOfPage == 1)
+            Currencies.Clear();
 
-        //_currentRequest = _currentRequest with
-        //{
-        //    CurrencyListOrder = MarketCurrenciesOrder.MARKET_CAP_ASC
-        //};
+        var _currentRequest = new GetCurrenciesListRequest(
+                                     ItemsPerPage: ITEM_PER_PAGE,
+                                     NumberOfPage: _numberOfPage,
+                                     CurrencyListOrder: MarketCurrenciesOrder.MARKET_CAP_DESC,
+                                     Currency: MarketCurrencies.USD,
+                                     Locale: ApiLocale.EN,
+                                     CurrenciesPricePresision: CurrencyPricePrecision.P2,
+                                     TimeFrame: TimeFramesForPriceChangePercentage.H24);
 
         var result = await _coinGeckoClient.GetListOfCurrenciesAsync(_currentRequest);
+
         if (result.IsError)
             return;
 
