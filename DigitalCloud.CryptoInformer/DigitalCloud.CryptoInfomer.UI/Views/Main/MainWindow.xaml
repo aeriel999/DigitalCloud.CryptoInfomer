@@ -68,7 +68,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <DataGrid Grid.Column="1"
@@ -118,10 +118,26 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <!-- Other information -->
-                        <DataGridTextColumn Header="Price" Binding="{Binding CurrentPrice}" Width="*"/>
-                        <DataGridTextColumn Header="Market Cap" Binding="{Binding MarketCap}" Width="*"/>
-                        <DataGridTextColumn Header="Volume (24h)" Binding="{Binding TotalVolume}" Width="*"/>
-                        <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="*"/>
+                        <DataGridTextColumn Header="Price" 
+                                            Binding="{Binding CurrentPrice}" Width="*"/>
+                        <DataGridTextColumn Header="Market Cap" 
+                                            Binding="{Binding MarketCap}" Width="*"/>
+                        <DataGridTextColumn Header="Volume (24h)" 
+                                            Binding="{Binding TotalVolume}" Width="*"/>
+                        <DataGridTextColumn Header="Change (24h %)" 
+                                            Binding="{Binding PriceChangePercentage24h}" Width="*"/>
+                        <!--Details BTN-->
+                        <DataGridTemplateColumn Header="Actions" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Details"
+                                            Padding="6,2"
+                                            Command="{Binding DataContext.OpenCoinDetailsCommand, 
+                                            RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding CurrencyId}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--Loader-->

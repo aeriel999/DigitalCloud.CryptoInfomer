@@ -19,9 +19,13 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Main
     /// </summary>
     public partial class CoinDetailsWindow : Window
     {
-        public CoinDetailsWindow()
+        private readonly string _coinId;
+
+        public CoinDetailsWindow(string coinId)
         {
             InitializeComponent();
+
+            _coinId = coinId;
         }
     }
 }

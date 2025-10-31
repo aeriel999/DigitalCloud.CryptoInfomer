@@ -32,7 +32,6 @@ public partial class MainWindow : Window
 
         DataContext = App.Current.Services.GetService<MainViewModel>();
     }
-
   
     private void Top_10_Button_Click(object sender, RoutedEventArgs e)
     {

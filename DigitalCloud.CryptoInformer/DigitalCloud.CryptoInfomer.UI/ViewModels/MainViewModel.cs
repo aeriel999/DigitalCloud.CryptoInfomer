@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalCloud.CryptoInfomer.UI.Views.Main;
 using DigitalCloud.CryptoInformer.Application.Helpers.Constants;
 using DigitalCloud.CryptoInformer.Application.Helpers.Enums;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
@@ -54,6 +55,15 @@ public partial class MainViewModel : ObservableObject
     public IAsyncRelayCommand SetAllListModeCommand { get; }
     public IAsyncRelayCommand LoadNextPartForCurenciesListCommand { get; }
 
+    [RelayCommand]
+    private void OpenCoinDetails(string coinId)
+    {
+        if (string.IsNullOrWhiteSpace(coinId))
+            return;
+
+        var detailsWindow = new CoinDetailsWindow(coinId);
+        detailsWindow.Show();
+    }
 
     private async Task InitialLoadCurrenciesAsync()
     {
