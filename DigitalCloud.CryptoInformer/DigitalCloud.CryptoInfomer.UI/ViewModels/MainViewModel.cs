@@ -17,13 +17,16 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<CurrencyInfoResponse> _currencies = new();
 
+    [ObservableProperty]
+    private bool isMoreBtnVisible;
+
+    [ObservableProperty]
+    private bool isLoading;
+
     private const int ITEM_PER_PAGE = 10;
 
     private int? _amountOfPage;
     private int _numberOfPage;
-
-    [ObservableProperty]
-    private bool isMoreBtnVisible;
 
     public MainViewModel(ICoinGeckoClient coinGeckoClient)
     {
@@ -37,7 +40,7 @@ public partial class MainViewModel : ObservableObject
 
         InitialLoadCurrenciesCommand = new AsyncRelayCommand(InitialLoadCurrenciesAsync);
 
-       // _ = InitialLoadCurrenciesAsync();
+       _ = InitialLoadCurrenciesAsync();
 
         SetTop10ModeCommand = new AsyncRelayCommand(SetTop10ModeAsync);
         SetTop100ModeCommand = new AsyncRelayCommand(SetTop100ModeAsync);
@@ -54,15 +57,21 @@ public partial class MainViewModel : ObservableObject
 
     private async Task InitialLoadCurrenciesAsync()
     {
-        var result = await _coinGeckoClient.GetListOfCurrenciesAsync();
-        if (result.IsError)
+        try
         {
+            IsLoading = true;
 
-            return;
+            var result = await _coinGeckoClient.GetListOfCurrenciesAsync();
+            if (result.IsError)
+            {
+
+                return;
+            }
+
+            foreach (var item in result.Value)
+                Currencies.Add(item);
         }
-
-        foreach (var item in result.Value)
-            Currencies.Add(item);
+        finally { IsLoading = false; }
     }
 
     private async Task SetTop10ModeAsync()
@@ -101,6 +110,10 @@ public partial class MainViewModel : ObservableObject
 
     private async Task LoadFirstTop10CurrenciesAsync()
     {
+        try
+        {
+            IsLoading = true;
+
         //Logic for first page load (Top10/Top100/All)
         if (_numberOfPage == 1)
             Currencies.Clear();
@@ -125,6 +138,8 @@ public partial class MainViewModel : ObservableObject
 
         foreach (var item in result.Value)
             Currencies.Add(item);
+        }
+        finally { IsLoading = false; }
     }
 }
 

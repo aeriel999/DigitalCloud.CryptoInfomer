@@ -51,6 +51,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- Converter for loader-->
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -224,6 +226,18 @@
                         <DataGridTextColumn Header="Change (24h %)" Binding="{Binding PriceChangePercentage24h}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
+                <!--Loader-->
+                <Grid Grid.Column="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Background="#40FFFFFF"
+                      Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">   
+                    <ProgressBar IsIndeterminate="True"
+                         Width="160"
+                         Height="4"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"/>
+                </Grid>
             </Grid>
         </Grid>
         <!--More Button-->
