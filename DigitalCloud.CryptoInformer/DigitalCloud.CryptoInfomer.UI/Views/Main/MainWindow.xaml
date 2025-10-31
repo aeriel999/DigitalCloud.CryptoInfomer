@@ -6,14 +6,8 @@
         xmlns:views="clr-namespace:DigitalCloud.CryptoInfomer.UI.Views.Shared"
 		xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
 		mc:Ignorable="d"
-		Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-		Title="DigitalCloud.CryptoInfomer" 
-        Height="750" 
-        MinHeight="500"
-        MaxHeight="1000"
-        Width="1000" 
-        MinWidth="800"
-        MaxWidth="1500"
+        Style="{StaticResource BaseWindowStyle}"
+		Title="DigitalCloud.CryptoInfomer - Main Window" 
 		ThemeMode="Light">
     <Window.Resources>
         <!-- Converter for loader-->
@@ -25,7 +19,6 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
-
         </Grid.RowDefinitions>
         <!--Header-->
         <views:AppHeader />
