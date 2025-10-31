@@ -35,10 +35,14 @@ public partial class MainViewModel : ObservableObject
        // _ = InitialLoadCurrenciesAsync();
 
         SetTop10ModeCommand = new AsyncRelayCommand(SetTop10Mode);
+        SetTop100ModeCommand = new AsyncRelayCommand(SetTop100Mode);
+        SetAllListModeCommand = new AsyncRelayCommand(SetAllListMode);
     }
 
     public IAsyncRelayCommand InitialLoadCurrenciesCommand { get; }
     public IAsyncRelayCommand SetTop10ModeCommand { get; }
+    public IAsyncRelayCommand SetTop100ModeCommand { get; }
+    public IAsyncRelayCommand SetAllListModeCommand { get; }
 
     private async Task InitialLoadCurrenciesAsync()
     {
@@ -54,17 +58,35 @@ public partial class MainViewModel : ObservableObject
     }
 
     private async Task SetTop10Mode()
-    { 
+    {
         _numberOfPage = 1;
         _amountOfPage = 1;
 
         await LoadFirstTop10CurrenciesAsync();
     }
+
+    private async Task SetTop100Mode()
+    {
+        _numberOfPage = 1;
+        _amountOfPage = 10;
+
+        await LoadFirstTop10CurrenciesAsync();
+    }
+
+    private async Task SetAllListMode()
+    {
+        _numberOfPage = 1;
+        _amountOfPage = null;
+
+        await LoadFirstTop10CurrenciesAsync();
+    }
+
     private async Task LoadFirstTop10CurrenciesAsync()
     {
-        if (_amountOfPage == 1)
+        //Logic for first page load (Top10/Top100/All)
+        if (_numberOfPage == 1)
             Currencies.Clear();
-
+        
         var _currentRequest = new GetCurrenciesListRequest(
                                      ItemsPerPage: ITEM_PER_PAGE,
                                      NumberOfPage: _numberOfPage,
