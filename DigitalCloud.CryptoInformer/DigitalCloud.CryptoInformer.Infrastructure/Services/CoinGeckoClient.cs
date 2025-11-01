@@ -10,12 +10,12 @@ namespace DigitalCloud.CryptoInformer.Infrastructure.Services;
 
 internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoClient
 {
-    public async Task<ErrorOr<List<CurrencyInfoResponse>>>GetListOfCurrenciesAsync(
+    public async Task<ErrorOr<List<GetCurrenciesListResponse>>>GetListOfCurrenciesAsync(
 		GetCurrenciesListRequest request)
     {
 		try
 		{
-			var result = await httpClient.GetFromJsonAsync<List<CurrencyInfoResponse>>(
+			var result = await httpClient.GetFromJsonAsync<List<GetCurrenciesListResponse>>(
 				$"{url}/coins/markets?" +
 				$"vs_currency={request.Currency}" +
 				$"&order={request.CurrencyListOrder}" +
@@ -53,11 +53,11 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
         }
     }
 
-    public async Task<ErrorOr<List<CurrencyInfoResponse>>> GetListOfCurrenciesAsync()
+    public async Task<ErrorOr<List<GetCurrenciesListResponse>>> GetListOfCurrenciesAsync()
     {
         try
         {
-            var result = await httpClient.GetFromJsonAsync<List<CurrencyInfoResponse>>(
+            var result = await httpClient.GetFromJsonAsync<List<GetCurrenciesListResponse>>(
                 $"{url}/coins/markets?" +
                 "vs_currency=usd" +
                 "&order=market_cap_desc" +

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DigitalCloud.CryptoInfomer.UI.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +23,24 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Main
     {
         private readonly string _coinId;
 
+        private readonly CoinDetailsViewModel _coinDetailsViewModel;
+
+
         public CoinDetailsWindow(string coinId)
         {
             InitializeComponent();
 
             _coinId = coinId;
+
+            _coinDetailsViewModel = App.Current.Services.GetService<CoinDetailsViewModel>()!;
+            DataContext = _coinDetailsViewModel;
+
+            Loaded += OnWindowLoaded;
+        }
+
+        private async void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            await _coinDetailsViewModel.InitializeAsync(_coinId);
         }
     }
 }

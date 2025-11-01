@@ -16,13 +16,13 @@ public partial class MainViewModel : ObservableObject
     private readonly ICoinGeckoClient _coinGeckoClient;
 
     [ObservableProperty]
-    private ObservableCollection<CurrencyInfoResponse> _currencies = new();
+    private ObservableCollection<GetCurrenciesListResponse> _currencies = new();
 
     [ObservableProperty]
-    private bool isMoreBtnVisible;
+    private bool _isMoreBtnVisible;
 
     [ObservableProperty]
-    private bool isLoading;
+    private bool _isLoading;
 
     private const int ITEM_PER_PAGE = 10;
 
