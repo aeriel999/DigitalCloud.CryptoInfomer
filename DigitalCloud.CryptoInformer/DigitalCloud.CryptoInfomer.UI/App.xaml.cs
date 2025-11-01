@@ -1,4 +1,5 @@
-﻿using DigitalCloud.CryptoInformer.Infrastructure;
+﻿using DigitalCloud.CryptoInfomer.UI.Views.Shell;
+using DigitalCloud.CryptoInformer.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
@@ -48,6 +49,12 @@ namespace DigitalCloud.CryptoInfomer.UI
             services.AddPresentation();
 
             return services.BuildServiceProvider();
+        }
+
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            var mainWindow = Services.GetRequiredService<MainWindow>();
+            mainWindow.Show();
         }
     }
 }

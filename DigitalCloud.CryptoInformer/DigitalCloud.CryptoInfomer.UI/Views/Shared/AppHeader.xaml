@@ -52,7 +52,7 @@
             <!--Menu-->
             <Menu HorizontalAlignment="Left" VerticalAlignment="Center">
                 <MenuItem Header="Home"
-                          Click="HomeMenu_Click">
+                           >
                 </MenuItem>
                 <MenuItem Header="Exchanges">
                 </MenuItem>

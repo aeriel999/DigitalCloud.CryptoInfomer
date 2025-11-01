@@ -1,6 +1,8 @@
-﻿using DigitalCloud.CryptoInfomer.UI.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,17 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DigitalCloud.CryptoInfomer.UI.Views.Main;
-
+namespace DigitalCloud.CryptoInfomer.UI.Views.Pages;
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+/// Interaction logic for CoinsListPage.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class CoinsListPage : Page
 {
     private readonly Style _defaultStyle;
     private readonly Style _accentStyle;
-
-    public MainWindow()
+    public CoinsListPage()
     {
         InitializeComponent();
 
@@ -29,10 +29,8 @@ public partial class MainWindow : Window
         _accentStyle = (Style)Application.Current.Resources["AccentButtonStyle"];
 
         Top_10_Button.Style = _accentStyle;
-
-        DataContext = App.Current.Services.GetService<MainViewModel>();
     }
-  
+
     private void Top_10_Button_Click(object sender, RoutedEventArgs e)
     {
         var button = sender as Button;

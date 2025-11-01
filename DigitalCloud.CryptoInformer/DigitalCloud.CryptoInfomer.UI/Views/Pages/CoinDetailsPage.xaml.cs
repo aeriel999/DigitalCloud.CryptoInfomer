@@ -12,21 +12,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DigitalCloud.CryptoInfomer.UI.Views.Main
+namespace DigitalCloud.CryptoInfomer.UI.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CoinDetailsWindow.xaml
+    /// Interaction logic for CoinDetailPage.xaml
     /// </summary>
-    public partial class CoinDetailsWindow : Window
+    public partial class CoinDetailsPage : Page
     {
         private readonly string _coinId;
 
         private readonly CoinDetailsViewModel _coinDetailsViewModel;
 
 
-        public CoinDetailsWindow(string coinId)
+        public CoinDetailsPage(string coinId)
         {
             InitializeComponent();
 

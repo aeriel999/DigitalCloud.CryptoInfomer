@@ -1,5 +1,4 @@
-﻿using DigitalCloud.CryptoInfomer.UI.Views.Main;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,14 +30,14 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Shared
             // switch the theme
         }
 
-        private void HomeMenu_Click(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = new MainWindow();
+        //private void HomeMenu_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var mainWindow = new MainWindow();
 
-            mainWindow.Show();
+        //    mainWindow.Show();
 
-            Window.GetWindow(this)?.Close();
-        }
+        //    Window.GetWindow(this)?.Close();
+        //}
     }
 
 

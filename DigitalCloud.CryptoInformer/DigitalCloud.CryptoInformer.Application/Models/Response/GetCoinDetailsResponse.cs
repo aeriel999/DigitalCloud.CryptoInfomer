@@ -40,8 +40,8 @@ public class GetCoinDetailsResponse
 
 public class CoinImageData
 {
-    [JsonPropertyName("large")]
-    public string? Large { get; init; }
+    [JsonPropertyName("small")]
+    public string? CoinIcon { get; init; }
 }
 
 public class MarketData

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalCloud.CryptoInfomer.UI.Views.Main;
 using DigitalCloud.CryptoInformer.Application.Helpers.Constants;
 using DigitalCloud.CryptoInformer.Application.Helpers.Enums;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
 
-public partial class MainViewModel : ObservableObject
+public partial class CoinsListViewModel : ObservableObject
 {
     private readonly ICoinGeckoClient _coinGeckoClient;
 
@@ -29,7 +28,7 @@ public partial class MainViewModel : ObservableObject
     private int? _amountOfPage;
     private int _numberOfPage;
 
-    public MainViewModel(ICoinGeckoClient coinGeckoClient)
+    public CoinsListViewModel(ICoinGeckoClient coinGeckoClient)
     {
         _coinGeckoClient = coinGeckoClient;
 
@@ -55,16 +54,16 @@ public partial class MainViewModel : ObservableObject
     public IAsyncRelayCommand SetAllListModeCommand { get; }
     public IAsyncRelayCommand LoadNextPartForCurenciesListCommand { get; }
 
-    [RelayCommand]
-    private void OpenCoinDetails(string coinId)
-    {
-        if (string.IsNullOrWhiteSpace(coinId))
-            return;
+    //[RelayCommand]
+    //private void OpenCoinDetails(string coinId)
+    //{
+    //    if (string.IsNullOrWhiteSpace(coinId))
+    //        return;
 
-        var detailsWindow = new CoinDetailsWindow(coinId);
+    //    var detailsWindow = new CoinDetailsWindow(coinId);
 
-        detailsWindow.Show();
-    }
+    //    detailsWindow.Show();
+    //}
 
     private async Task InitialLoadCurrenciesAsync()
     {
