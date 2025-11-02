@@ -7,7 +7,6 @@ namespace DigitalCloud.CryptoInformer.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
-
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, IConfiguration config)
     {
@@ -15,7 +14,6 @@ public static class ServiceCollectionExtensions
         {
             var http = sp.GetRequiredService<HttpClient>();
 
-            // Налаштування один раз
             http.BaseAddress = new Uri(config["CoinGeckoApiUrl"]!);
             http.DefaultRequestHeaders.UserAgent.ParseAdd("CryptoInformer/1.0");
 

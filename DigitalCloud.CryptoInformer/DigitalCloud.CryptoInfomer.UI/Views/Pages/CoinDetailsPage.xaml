@@ -40,10 +40,10 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <!--<Image Source="{Binding Coin.Image.CoinIcon}" Width="32" Height="32"/>
+                        <Image Source="{Binding Coin.Image.CoinIcon}" Width="32" Height="32"/>
                  <TextBlock Grid.Column="1" Text="{Binding Coin.Name}" FontWeight="Bold"/>
                  <TextBlock Grid.Column="2" Text="{Binding Coin.Symbol}" Foreground="#666"/>
-                 <TextBlock Grid.Column="3" Text="{Binding Coin.MarketCapRank, StringFormat={}{0:#}}" />-->
+                 <TextBlock Grid.Column="3" Text="{Binding Coin.MarketCapRank, StringFormat={}{0:#}}" />
                     </Grid>
                 </Grid>
             </Grid>

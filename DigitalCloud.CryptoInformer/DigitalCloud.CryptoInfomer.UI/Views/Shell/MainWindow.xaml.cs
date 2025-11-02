@@ -1,17 +1,7 @@
-﻿using DigitalCloud.CryptoInfomer.UI.Services.Navigation;
+﻿using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
 using DigitalCloud.CryptoInfomer.UI.ViewModels;
 using DigitalCloud.CryptoInfomer.UI.Views.Pages;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DigitalCloud.CryptoInfomer.UI.Views.Shell;
 
@@ -20,12 +10,17 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Shell;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow(ShellViewModel viewModel, CoinsListPage coinsListPage)
+    public MainWindow(
+            ShellViewModel viewModel,
+            IDigitalCloudNavigationService navigation)
     {
         InitializeComponent();
 
         DataContext = viewModel;
-        MainFrame.Navigate(coinsListPage);
+
+        navigation.Initialize(MainFrame);
+
+        navigation.NavigateTo<CoinsListPage>();
     }
 }
 

@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DigitalCloud.CryptoInfomer.UI.Services.Navigation;
+using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
 using DigitalCloud.CryptoInfomer.UI.Views.Pages;
-using System.Windows.Navigation;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 {

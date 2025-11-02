@@ -15,7 +15,7 @@
             <RowDefinition Height="8*"></RowDefinition>
         </Grid.RowDefinitions>
         <!--Header-->
-        <views:AppHeader />
+        <views:AppHeader Grid.Row="0"/>
         <!-- content -->
         <Frame x:Name="MainFrame"
                Grid.Row="1"

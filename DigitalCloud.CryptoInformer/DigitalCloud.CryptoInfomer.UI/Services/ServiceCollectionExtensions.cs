@@ -1,4 +1,5 @@
 ﻿using DigitalCloud.CryptoInfomer.UI.Services.Navigation;
+using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
 using DigitalCloud.CryptoInfomer.UI.ViewModels;
 using DigitalCloud.CryptoInfomer.UI.Views.Pages;
 using DigitalCloud.CryptoInfomer.UI.Views.Shell;

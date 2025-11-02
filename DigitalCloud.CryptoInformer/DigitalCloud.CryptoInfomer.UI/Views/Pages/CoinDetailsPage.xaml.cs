@@ -1,47 +1,31 @@
-﻿using DigitalCloud.CryptoInfomer.UI.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
+using DigitalCloud.CryptoInfomer.UI.ViewModels;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DigitalCloud.CryptoInfomer.UI.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CoinDetailPage.xaml
     /// </summary>
-    public partial class CoinDetailsPage : Page
+    public partial class CoinDetailsPage : Page, INavigatable<string>
     {
-        private readonly string _coinId;
-
         private readonly CoinDetailsViewModel _coinDetailsViewModel;
 
 
-        public CoinDetailsPage(string coinId)
+        public CoinDetailsPage(CoinDetailsViewModel viewModel)
         {
             InitializeComponent();
 
-            _coinId = coinId;
-
-            _coinDetailsViewModel = App.Current.Services.GetService<CoinDetailsViewModel>()!;
+            _coinDetailsViewModel = viewModel;
             DataContext = _coinDetailsViewModel;
-
-            Loaded += OnWindowLoaded;
         }
 
-        private async void OnWindowLoaded(object sender, RoutedEventArgs e)
+        public async void OnNavigatedTo(string coinId)
         {
-            await _coinDetailsViewModel.InitializeAsync(_coinId);
+            if (string.IsNullOrWhiteSpace(coinId))
+                return;
+
+            await _coinDetailsViewModel.InitializeAsync(coinId);
         }
     }
 }

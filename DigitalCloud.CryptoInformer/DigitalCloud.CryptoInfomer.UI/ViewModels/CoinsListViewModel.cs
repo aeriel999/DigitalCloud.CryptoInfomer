@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
+using DigitalCloud.CryptoInfomer.UI.Views.Pages;
 using DigitalCloud.CryptoInformer.Application.Helpers.Constants;
 using DigitalCloud.CryptoInformer.Application.Helpers.Enums;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
@@ -7,12 +9,15 @@ using DigitalCloud.CryptoInformer.Application.Models.Requests;
 using DigitalCloud.CryptoInformer.Application.Models.Response;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
 
 public partial class CoinsListViewModel : ObservableObject
 {
     private readonly ICoinGeckoClient _coinGeckoClient;
+    private readonly IDigitalCloudNavigationService _navigation;
+
 
     [ObservableProperty]
     private ObservableCollection<GetCurrenciesListResponse> _currencies = new();
@@ -28,14 +33,14 @@ public partial class CoinsListViewModel : ObservableObject
     private int? _amountOfPage;
     private int _numberOfPage;
 
-    public CoinsListViewModel(ICoinGeckoClient coinGeckoClient)
+    public CoinsListViewModel(ICoinGeckoClient coinGeckoClient, IDigitalCloudNavigationService navigation)
     {
         _coinGeckoClient = coinGeckoClient;
+        _navigation = navigation;
 
         IsMoreBtnVisible = false;
 
-         _numberOfPage = 1;
-
+        _numberOfPage = 1;
         _amountOfPage = 1;
 
         InitialLoadCurrenciesCommand = new AsyncRelayCommand(InitialLoadCurrenciesAsync);
@@ -54,16 +59,14 @@ public partial class CoinsListViewModel : ObservableObject
     public IAsyncRelayCommand SetAllListModeCommand { get; }
     public IAsyncRelayCommand LoadNextPartForCurenciesListCommand { get; }
 
-    //[RelayCommand]
-    //private void OpenCoinDetails(string coinId)
-    //{
-    //    if (string.IsNullOrWhiteSpace(coinId))
-    //        return;
+    [RelayCommand]
+    private void OpenCoinDetails(string coinId)
+    {
+        if (string.IsNullOrWhiteSpace(coinId))
+            return;
 
-    //    var detailsWindow = new CoinDetailsWindow(coinId);
-
-    //    detailsWindow.Show();
-    //}
+        _navigation.NavigateTo<CoinDetailsPage, string>(coinId);
+    }
 
     private async Task InitialLoadCurrenciesAsync()
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
 
 namespace DigitalCloud.CryptoInfomer.UI.Services.Navigation
@@ -21,9 +22,24 @@ namespace DigitalCloud.CryptoInfomer.UI.Services.Navigation
         public void NavigateTo<TPage>() where TPage : Page
         {
             if (_frame is null)
-                throw new InvalidOperationException("DigitalCloudNavigationService is not initialized with Frame.");
+                throw new InvalidOperationException(
+                    "DigitalCloudNavigationService is not initialized with Frame.");
 
             var page = _serviceProvider.GetRequiredService<TPage>();
+            _frame.Navigate(page);
+        }
+
+        public void NavigateTo<TPage, TParam>(TParam parameter) where TPage : Page
+        {
+            if (_frame is null)
+                throw new InvalidOperationException(
+                    "DigitalCloudNavigationService is not initialized with Frame.");
+
+            var page = _serviceProvider.GetRequiredService<TPage>();
+
+            if (page is INavigatable<TParam> navPage)
+                navPage.OnNavigatedTo(parameter);
+
             _frame.Navigate(page);
         }
     }
