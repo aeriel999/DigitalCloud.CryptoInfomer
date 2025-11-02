@@ -7,67 +7,79 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CoinsListPage">
+    
     <Page.Resources>
         <!-- Converter for loader-->
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
-              <RowDefinition Height="1*"></RowDefinition>
-              <RowDefinition Height="6*"></RowDefinition>
-              <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Grid Grid.Row="0" 
               Height="Auto" 
               VerticalAlignment="Stretch"
               Background="#4BA3E3">
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="1*"></ColumnDefinition>
-              <ColumnDefinition Width="1*"></ColumnDefinition>
-              <ColumnDefinition Width="1*"></ColumnDefinition>
-              <ColumnDefinition Width="2*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-                <!--<Button Content="Top 10" />-->
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <!--<Button Content="Top 10" />-->
             <Button x:Name="Top_10_Button"
                     Grid.Column="0"
                     Content="Top 10" 
                     HorizontalAlignment="Center"
                     Click="Top_10_Button_Click"
                     Command="{Binding SetTop10ModeCommand}" />
+
+            <!--<Button Content="Top 100" />-->
             <Button x:Name="Top_100_Button"
                     Grid.Column="1" 
                     Content="Top 100"
                     HorizontalAlignment="Center"
                     Click="Top_100_Button_Click"
                     Command="{Binding SetTop100ModeCommand}"/>
+
+            <!--<Button Content="All />-->
             <Button x:Name="All_Button"
                     Grid.Column="2" 
                     Content="All" 
                     HorizontalAlignment="Center"
                     Click="All_Button_Click"
                     Command="{Binding SetAllListModeCommand}"/>
-                <!--ComboBox With platforms-->
-             <ComboBox Grid.Column="3" 
+            
+            <!--ComboBox With platforms-->
+            <ComboBox Grid.Column="3" 
                        MinWidth="200" 
                        HorizontalAlignment="Center" 
                        SelectedIndex="0">
-                 <ComboBoxItem Content="All markets" />
-                 <ComboBoxItem Content="Market 1" />
-                 <ComboBoxItem Content="Market 2" />
-                 <ComboBoxItem Content="Market 3" />
-             </ComboBox>
-         </Grid>
-            <!--Main content-->
+                <ComboBoxItem Content="All markets" />
+                <ComboBoxItem Content="Market 1" />
+                <ComboBoxItem Content="Market 2" />
+                <ComboBoxItem Content="Market 3" />
+            </ComboBox>
+        </Grid>
+        
+        <!--Main content-->
         <Grid Grid.Row="1"
               HorizontalAlignment="Stretch"
-	          VerticalAlignment="Stretch">  
+	          VerticalAlignment="Stretch">
             <Grid>
-                  <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                  <DataGrid Grid.Column="1"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!--Table-->
+                <DataGrid Grid.Column="1"
                             Background="White"
                             ItemsSource="{Binding Currencies}" 
                             AutoGenerateColumns="False"
@@ -76,57 +88,57 @@
                             CanUserAddRows="False"
                             GridLinesVisibility="Horizontal"
                             VerticalContentAlignment="Center">
-                      <DataGrid.Resources>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            </Style>
-                      </DataGrid.Resources>
-                      <DataGrid.Columns>
-                            <!-- # -->
-                           <DataGridTextColumn Header="#" 
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <!-- # -->
+                        <DataGridTextColumn Header="#" 
                                                 Binding="{Binding MarketCapRank}" 
                                                 Width="40"/>
-                            <!-- Coin -->
-                            <DataGridTemplateColumn Header="Coin" Width="2*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" Margin="8,4">
-                                            <!-- Icon -->
+                        <!-- Coin -->
+                        <DataGridTemplateColumn Header="Coin" Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                                        <!-- Icon -->
                                         <Image Source="{Binding CurrencyIconImageLink}"
                                                Width="32"
                                                Height="32"
                                                Stretch="Uniform"
-                                               VerticalAlignment="Center"/> 
+                                               VerticalAlignment="Center"/>
                                         <!-- Title -->
-                                         <StackPanel Margin="8,0,0,0">
-                                                <TextBlock Text="{Binding CurrencyName}"
+                                        <StackPanel Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding CurrencyName}"
                                                            FontWeight="Bold"
                                                            FontSize="14"/>
-                                                <TextBlock Text="{Binding CurrencySymbol}"
+                                            <TextBlock Text="{Binding CurrencySymbol}"
                                                            FontSize="11"
                                                            Foreground="#808080"
                                                            TextWrapping="NoWrap" />
-                                            </StackPanel>
                                         </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <!-- Other information -->
-                            <DataGridTextColumn Header="Price" 
-                                    Binding="{Binding CurrentPrice}" Width="1*"/>
-                            <DataGridTextColumn Header="Market Cap" 
-                                    Binding="{Binding MarketCap}" Width="2*"/>
-                            <DataGridTextColumn Header="Volume (24h)" 
-                                    Binding="{Binding TotalVolume}" Width="2*"/>
-                            <DataGridTextColumn Header="Change (24h %)" 
-                                    Binding="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}}"
-                                    Width="1*"/>
-                            <!--Details BTN-->
-                            <DataGridTemplateColumn Header="" Width="1*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Detail"
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!-- Other information -->
+                        <DataGridTextColumn Header="Price" 
+                                    Binding="{Binding CurrentPrice}" Width="*"/>
+                        <DataGridTextColumn Header="Market Cap" 
+                                    Binding="{Binding MarketCap}" Width="*"/>
+                        <DataGridTextColumn Header="Volume (24h)" 
+                                    Binding="{Binding TotalVolume}" Width="*"/>
+                        <DataGridTextColumn Header="Change (24h %)" 
+                                    Binding="{Binding PriceChangePercentage24h, StringFormat={}{0:F10}}"
+                                    Width="*"/>
+                        <!--Details BTN-->
+                        <DataGridTemplateColumn Header="" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Detail"
                                                 Padding="6,2"
                                                 Margin="4,0"
                                                 HorizontalAlignment="Center"
@@ -135,13 +147,13 @@
                                                       RelativeSource={RelativeSource 
                                                       AncestorType=DataGrid}}"
                                                CommandParameter="{Binding CurrencyId}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <!--Loader-->
-                    <Grid Grid.Column="1"
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--Loader-->
+                <Grid Grid.Column="1"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
                           Background="#40FFFFFF"
@@ -152,27 +164,28 @@
                                   Height="4"
                                   VerticalAlignment="Stretch"
                                   HorizontalAlignment="Stretch"/>
-                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
-            <!--More Button-->
+        
+        <!--More Button-->
         <Grid Grid.Row="2">
-              <Button x:Name="MoreBtn"
+            <Button x:Name="MoreBtn"
                         Content="More"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Command="{Binding LoadNextPartForCurenciesListCommand}">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsMoreBtnVisible}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </Grid>
-     </Grid>
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMoreBtnVisible}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
 </Page>

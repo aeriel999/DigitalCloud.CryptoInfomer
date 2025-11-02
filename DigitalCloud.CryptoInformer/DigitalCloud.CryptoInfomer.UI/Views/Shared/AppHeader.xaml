@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
+
     <UserControl.Resources>
         <!-- Switch style -->
         <Style x:Key="SwitchToggleStyle" TargetType="ToggleButton">
@@ -18,14 +19,14 @@
                             <!-- track -->
                             <Border x:Name="Track"
                                      CornerRadius="14"
-                                     Background="{TemplateBinding Background}"/>    
+                                     Background="{TemplateBinding Background}"/>
                             <!-- circle -->
                             <Border x:Name="Thumb"
                                      Width="15" Height="15"
                                      CornerRadius="10"
                                      Background="White"
                                      Margin="2"
-                                     HorizontalAlignment="Left"/>   
+                                     HorizontalAlignment="Left"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
@@ -42,65 +43,72 @@
             </Setter>
         </Style>
     </UserControl.Resources>
+
     <Grid VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <!--Menu-->
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!--Menu-->
         <Menu Grid.Column="0"
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Center">
-             <MenuItem Header="Home"/>
-             <MenuItem Header="Exchanges"/>
-             <MenuItem Header="About"/>
-         </Menu>
-            <!--Logo-->
+            <MenuItem Header="Home"/>
+            <MenuItem Header="Exchanges"/>
+            <MenuItem Header="About"/>
+        </Menu>
+
+        <!--Logo-->
         <Image Grid.Column="1" 
 			    Source="/Assets/Images/logo_4.png"
                 MaxHeight="100"
 			    MinHeight="20"
 			    Margin="0, 15, 0, 15"
 			    VerticalAlignment="Center"
-			    HorizontalAlignment="Center"/>  
-            <!--Additional Block-->
+			    HorizontalAlignment="Center"/>
+
+        <!--Additional Block-->
         <Grid Grid.Column="2" 
 			      HorizontalAlignment="Right" 
 			      VerticalAlignment="Center">
-             <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!--Search-->
+            <Grid Grid.Column="0"
+                      HorizontalAlignment="Right" 
+                      Margin="0,0,15,0">
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <!--Search-->
-             <Grid Grid.Column="0"
-                      HorizontalAlignment="Right" 
-                      Margin="0,0,15,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <!--<TextBox />-->
-                    <TextBlock  
+                <!--<TextBox />-->
+                <TextBlock  
 							VerticalAlignment="Center"
 							FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
 							Text="&#xE721;"/>
-                </Grid>
-                <!--Localization-->
-             <ComboBox Grid.Column="1"
+            </Grid>
+
+            <!--Localization-->
+            <ComboBox Grid.Column="1"
 					      HorizontalAlignment="Left" 
 					      SelectedIndex="0"
 					      Margin="10">
-                 <ComboBoxItem Content="EN" />
-                 <ComboBoxItem Content="UA" />
-             </ComboBox>
-                <!--Theme switcher-->
-             <ToggleButton Grid.Column="2"
+                <ComboBoxItem Content="EN" />
+                <ComboBoxItem Content="UA" />
+            </ComboBox>
+
+            <!--Theme switcher-->
+            <ToggleButton Grid.Column="2"
                            Style="{StaticResource SwitchToggleStyle}"
     					   x:Name="ThemeSwitch"
 				    	   Margin="8"
 					       Click="ThemeSwitch_Click"/>
-            </Grid>
-     </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

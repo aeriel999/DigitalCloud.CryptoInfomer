@@ -7,54 +7,146 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CoinDetailsPage">
-
-    <Grid>
+    
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!--Main Part-->
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        
+        <!-- ====== Top part ====== -->
+        <Grid Grid.Row="0" Margin="0 0 0 16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="3.5*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Coin Info -->
+            <Border Grid.Column="0"
+                Background="White"
+                CornerRadius="8"
+                Padding="16"
+                Margin="0 0 12 0">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid>
+
+                    <!-- Name -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 0 0 8">
+                        <Image Source="{Binding Coin.Image.CoinIcon}" Width="40" Height="40" Margin="0 0 10 0"/>
+                        <TextBlock Text="{Binding Coin.Name}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Coin.Symbol}" Margin="8 0 0 0" Foreground="Gray" VerticalAlignment="Bottom"/>
+                        <TextBlock Text="{Binding Coin.MarketCapRank, StringFormat='#{0}'}"
+                               Margin="12 0 0 0"
+                               Foreground="Green"
+                               FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <!-- Price -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 8">
+                        <TextBlock Text="{Binding Coin.MarketData.CurrentPrice[usd], StringFormat={} ${0:N2}}"
+                               FontSize="26" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Coin.MarketData.PriceChange24h[usd], StringFormat={}{0:F2}%}"
+                               Margin="10 4 0 0"
+                               FontSize="14"
+                               Foreground="Green"/>
+                    </StackPanel>
+
+                    <!-- 24h range -->
+                    <Grid Grid.Row="2" Margin="0 0 0 12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="5*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Coin.Image.CoinIcon}" Width="32" Height="32"/>
-                 <TextBlock Grid.Column="1" Text="{Binding Coin.Name}" FontWeight="Bold"/>
-                 <TextBlock Grid.Column="2" Text="{Binding Coin.Symbol}" Foreground="#666"/>
-                 <TextBlock Grid.Column="3" Text="{Binding Coin.MarketCapRank, StringFormat={}{0:#}}" />
+
+                        <TextBlock Text="{Binding Coin.MarketData.Low24h[usd], StringFormat={} ${0:N0}}"
+                               Grid.Column="0" Foreground="Gray"/>
+
+                        <ProgressBar Grid.Column="1"
+                                 Height="6"
+                                 Margin="10 6"
+                                 Minimum="0"
+                                 Maximum="{Binding Coin.MarketData.High24h[usd]}"
+                                 Value="{Binding Coin.MarketData.CurrentPrice[usd]}"/>
+
+                        <TextBlock Text="{Binding Coin.MarketData.High24h[usd], StringFormat={} ${0:N0}}"
+                               Grid.Column="2" HorizontalAlignment="Right" Foreground="Gray"/>
+                    </Grid>
+                    <!-- List of params -->
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Market Cap" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Row="0" Text="{Binding Coin.MarketData.MarketCap[usd], StringFormat={} ${0:N0}}"
+                               HorizontalAlignment="Right"/>
+
+                        <TextBlock Grid.Row="1" Text="Fully Diluted Valuation" FontWeight="SemiBold" Margin="0 6 0 0"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Coin.MarketData.FullyDilutedValuation[usd], StringFormat={} ${0:N0}}"
+                               HorizontalAlignment="Right" Margin="0 6 0 0"/>
+
+                        <TextBlock Grid.Row="2" Text="24h Trading Vol" FontWeight="SemiBold" Margin="0 6 0 0"/>
+                        <TextBlock Grid.Row="2" Text="{Binding Coin.MarketData.TotalVolume[usd], StringFormat={} ${0:N0}}"
+                               HorizontalAlignment="Right" Margin="0 6 0 0"/>
+
+                        <TextBlock Grid.Row="3" Text="Circulating Supply" FontWeight="SemiBold" Margin="0 6 0 0"/>
+                        <TextBlock Grid.Row="3" Text="{Binding Coin.MarketData.CirculatingSupply, StringFormat={}{0:N0}}"
+                               HorizontalAlignment="Right" Margin="0 6 0 0"/>
+
+                        <TextBlock Grid.Row="4" Text="Max Supply" FontWeight="SemiBold" Margin="0 6 0 0"/>
+                        <TextBlock Grid.Row="4" Text="{Binding Coin.MarketData.MaxSupply, StringFormat={}{0:N0}}"
+                               HorizontalAlignment="Right" Margin="0 6 0 0"/>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                    <ColumnDefinition Width="6*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-            </Grid>
-            <Grid Grid.Row="2"></Grid>
+            </Border>
+            <!-- Chart -->
+            <Border Grid.Column="1"
+                Background="White"
+                CornerRadius="8"
+                Padding="12">
+                <StackPanel>
+                    <TextBlock Text="Price chart" FontWeight="Bold" Margin="0 0 0 8"/>
+                    <!-- тут LiveCharts -->
+                    <Border Height="180" Background="#F6F6F6" CornerRadius="4" BorderBrush="#DDD" BorderThickness="1">
+                        <TextBlock Text="[Chart Placeholder]"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="Gray"/>
+                    </Border>
+                </StackPanel>
+            </Border>
         </Grid>
+        <!-- Trade Market List -->
+        <DataGrid Grid.Row="1"
+              ItemsSource="{Binding Coin.Markets}"
+              AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Market" Binding="{Binding Market.Name}" Width="2*"/>
+                <DataGridTextColumn Header="Pair" Binding="{Binding Base}" Width="1*"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat={} ${0:F2}}" Width="2*"/>
+                <DataGridTextColumn Header="24h Volume" Binding="{Binding Volume24h, StringFormat={}{0:N2}}" Width="2*"/>
+                <DataGridTemplateColumn Header="Trade" Width="1.2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Open"
+                                    Padding="6 2"
+                                    Command="{Binding DataContext.OpenTradeCommand, 
+                                                RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding TradeUrl}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>
