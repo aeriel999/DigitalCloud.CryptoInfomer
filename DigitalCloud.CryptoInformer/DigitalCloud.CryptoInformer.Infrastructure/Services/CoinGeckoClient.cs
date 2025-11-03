@@ -21,7 +21,7 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
 				$"&order={request.CurrencyListOrder}" +
 				$"&per_page={request.ItemsPerPage}" +
 				$"&page={request.NumberOfPage}" +
-                $"&sparkline={request.IncludeSparkline}" +
+                $"&sparkline={request.IncludeSparkline.ToString().ToLowerInvariant()}" +
                 $"&price_change_percentage={request.TimeFrame}" +
 				$"&locale={request.Locale}" +
 				$"&precision={request.CurrenciesPricePresision}");
@@ -101,12 +101,12 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
             var result = await httpClient.GetFromJsonAsync<GetCoinDetailsResponse>(
                 $"{url}/coins/" +
                 $"{request.CoinId}" +
-                $"?localization={request.IncludeLocalization}" +
-                $" &tickers={request.IncludeTickers}" +
-                $"&market_data={request.IncludeMarketData}"+
-                $"&community_data={request.IncludeCommunityData}"+
-                $"&developer_data={request.IncludeDeveloperData}"+
-                $"&sparkline={request.IncludeSparkline}");
+                $"?localization={request.IncludeLocalization.ToString().ToLowerInvariant()}" +
+                $"&tickers={request.IncludeTickers.ToString().ToLowerInvariant()}" +
+                $"&market_data={request.IncludeMarketData.ToString().ToLowerInvariant()}"+
+                $"&community_data={request.IncludeCommunityData.ToString().ToLowerInvariant()}"+
+                $"&developer_data={request.IncludeDeveloperData.ToString().ToLowerInvariant()}"+
+                $"&sparkline={request.IncludeSparkline.ToString().ToLowerInvariant()}");
 
             if (result == null)
                 return Error.NotFound(

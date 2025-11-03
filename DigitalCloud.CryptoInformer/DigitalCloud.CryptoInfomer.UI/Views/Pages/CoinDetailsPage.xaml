@@ -1,4 +1,5 @@
 ﻿<Page x:Class="DigitalCloud.CryptoInfomer.UI.Views.Pages.CoinDetailsPage"
+      xmlns:oxy="http://oxyplot.org/wpf"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -148,14 +149,16 @@
                 CornerRadius="8"
                 Padding="12">
                 <StackPanel>
-                    <TextBlock Text="Price chart" FontWeight="Bold" Margin="0 0 0 8"/>
-                    <!-- тут LiveCharts -->
-                    <Border Height="180" Background="#F6F6F6" CornerRadius="4" BorderBrush="#DDD" BorderThickness="1">
-                        <TextBlock Text="[Chart Placeholder]"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Foreground="Gray"/>
-                    </Border>
+                    <TextBlock Text="Price chart" 
+                   FontWeight="Bold" 
+                   Margin="0 0 0 8"/>
+
+                    <oxy:PlotView Model="{Binding PriceModel}"
+                                  Height="180"
+                                  Background="#F6F6F6"
+                                  BorderBrush="#DDDDDD"
+                                  BorderThickness="1"/>
+
                 </StackPanel>
             </Border>
         </Grid>

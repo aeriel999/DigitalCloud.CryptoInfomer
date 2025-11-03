@@ -3,6 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
 using DigitalCloud.CryptoInformer.Application.Models.Requests;
 using DigitalCloud.CryptoInformer.Application.Models.Response;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 using System.Diagnostics;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
@@ -29,6 +32,13 @@ public partial class CoinDetailsViewModel : ObservableObject
 
     public IRelayCommand<string?> OpenTradeCommand { get; }
 
+    public PlotModel PriceModel { get; } = new();
+
+    partial void OnCoinChanged(GetCoinDetailsResponse? value)
+    {
+        BuildChart();
+    }
+
     public async Task InitializeAsync(string coinId)
     {
         try
@@ -42,7 +52,7 @@ public partial class CoinDetailsViewModel : ObservableObject
                                                     IncludeMarketData: true,
                                                     IncludeCommunityData: false,
                                                     IncludeDeveloperData: false,
-                                                    IncludeSparkline: false);
+                                                    IncludeSparkline: true);
 
             var result = await _coinGeckoClient.GetDetailsInformationForCoinAsync(coinDetailsRequest);
 
@@ -75,5 +85,46 @@ public partial class CoinDetailsViewModel : ObservableObject
         {
             // error
         }
+    }
+    private void BuildChart()
+    {
+        var prices = Coin?.MarketData?.Sparkline7D?.Price; // List<decimal> з 168 значень
+        PriceModel.Series.Clear();
+        PriceModel.Axes.Clear();
+
+        if (prices is null || prices.Count == 0)
+        {
+            PriceModel.InvalidatePlot(true);
+            return;
+        }
+
+        var startUtc = DateTimeOffset.UtcNow.AddDays(-7);
+
+        var series = new LineSeries { MarkerType = MarkerType.None };
+        for (int i = 0; i < prices.Count; i++)
+        {
+            var tLocal = startUtc.AddHours(i).ToLocalTime().DateTime;  // або залишай .UtcDateTime
+            series.Points.Add(DateTimeAxis.CreateDataPoint(tLocal, (double)prices[i]));
+        }
+
+        PriceModel.Axes.Add(new DateTimeAxis
+        {
+            Position = AxisPosition.Bottom,
+            StringFormat = "dd.MM HH:mm",
+            IntervalType = DateTimeIntervalType.Hours,   // підпис під годинний крок
+            MajorGridlineStyle = LineStyle.None,
+            MinorGridlineStyle = LineStyle.None
+        });
+
+        PriceModel.Axes.Add(new LinearAxis
+        {
+            Position = AxisPosition.Left,
+            StringFormat = "#,0",
+            MajorGridlineStyle = LineStyle.None,
+            MinorGridlineStyle = LineStyle.None
+        });
+
+        PriceModel.Series.Add(series);
+        PriceModel.InvalidatePlot(true);
     }
 }
