@@ -36,6 +36,18 @@ public class GetCoinDetailsResponse
 
     [JsonPropertyName("tickers")]
     public List<CoinMarketRow> Markets { get; init; } = [];
+
+    [JsonPropertyName("fully_diluted_valuation")]
+    public Dictionary<string, decimal>? FullyDilutedValuation { get; init; }
+
+    [JsonPropertyName("circulating_supply")]
+    public decimal? CirculatingSupply { get; init; }
+
+    [JsonPropertyName("total_supply")]
+    public decimal? TotalSupply { get; init; }
+
+    [JsonPropertyName("max_supply")]
+    public decimal? MaxSupply { get; init; }
 }
 
 public class CoinImageData
@@ -46,18 +58,32 @@ public class CoinImageData
 
 public class MarketData
 {
-    [JsonPropertyName("current_price")]
+    [JsonPropertyName("current_price")] 
     public Dictionary<string, decimal>? CurrentPrice { get; init; }
-
-    [JsonPropertyName("price_change_percentage_24h_in_currency")]
+    [JsonPropertyName("price_change_percentage_24h_in_currency")] 
     public Dictionary<string, decimal>? PriceChange24h { get; init; }
 
-    [JsonPropertyName("market_cap")]
-    public Dictionary<string, decimal>? MarketCap { get; init; }
+    [JsonPropertyName("low_24h")] 
+    public Dictionary<string, decimal>? Low24h { get; init; }
+    [JsonPropertyName("high_24h")] 
+    public Dictionary<string, decimal>? High24h { get; init; }
 
-    [JsonPropertyName("total_volume")]
+    [JsonPropertyName("market_cap")] 
+    public Dictionary<string, decimal>? MarketCap { get; init; }
+    [JsonPropertyName("fully_diluted_valuation")] 
+    public Dictionary<string, decimal>? FullyDilutedValuation { get; init; }
+    [JsonPropertyName("total_volume")] 
     public Dictionary<string, decimal>? TotalVolume { get; init; }
+
+    [JsonPropertyName("total_supply")] 
+    public decimal? TotalSupply { get; init; }
+    [JsonPropertyName("max_supply")] 
+    public decimal? MaxSupply { get; init; }
+
+    [JsonPropertyName("circulating_supply")]
+    public decimal? CirculatingSupply { get; init; }
 }
+
 
 public class CoinLinks
 {
