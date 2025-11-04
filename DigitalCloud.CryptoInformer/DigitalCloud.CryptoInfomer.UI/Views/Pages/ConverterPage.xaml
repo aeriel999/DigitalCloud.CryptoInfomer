@@ -3,12 +3,106 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:oxy="http://oxyplot.org/wpf"
       xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI.Views.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ConverterPage">
 
-    <Grid>
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
         
+        <!--Charts-->
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!--1 LineChart-->
+            <Border Grid.Row="0" Padding="12" Margin="0,0,12,12"
+                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                BorderBrush="#E6E6E6" BorderThickness="1" CornerRadius="12">
+                <Grid>
+                    <TextBlock Text="Price Chart (7d)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
+                           VerticalAlignment="Top"/>
+                    <oxy:PlotView Model="{Binding LinePlotModel}" Margin="0,28,0,0"/>
+                </Grid>
+            </Border>
+
+            <!--2 Japanese candlestick-->
+            <Border Grid.Row="1" Padding="12" Margin="0,12,12,0"
+                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                BorderBrush="#E6E6E6" BorderThickness="1" CornerRadius="12">
+                <Grid>
+                    <TextBlock Text="Candlestick Chart (7d)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
+                           VerticalAlignment="Top"/>
+                    <oxy:PlotView Model="{Binding CandlePlotModel}" Margin="0,28,0,0"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!--Converter-->
+        <Border Grid.Column="1" Padding="16" Margin="12,0,0,0"
+                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                BorderBrush="#E6E6E6" BorderThickness="1" CornerRadius="12">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="12"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="12"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Converter" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"/>
+
+                <!-- Main Coin -->
+                <TextBlock Grid.Row="1" Text="From" Margin="0,4,0,4" />
+                <ComboBox Grid.Row="2"
+                          ItemsSource="{Binding FromCurrencies}"
+                          SelectedItem="{Binding SelectedFromId}"
+                          DisplayMemberPath="Display"   
+                         SelectedValuePath="Value"
+                         MinWidth="220" />
+
+                    <!-- Amount -->
+                    <TextBlock Grid.Row="4" Text="Amount" Margin="0,4,0,4" />
+                    <TextBox Grid.Row="5"
+                         Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
+                         MinWidth="220" />
+
+                    <!-- Convert Coin -->
+                    <TextBlock Grid.Row="7" Text="To" Margin="0,4,0,4" />
+                    <ComboBox Grid.Row="8"
+                          ItemsSource="{Binding ToCurrencies}"
+                          SelectedItem="{Binding SelectedToCode}"
+                          MinWidth="220" />
+
+                    <!--Convert Btn-->
+                    <Button Grid.Row="10"
+                        Content="Convert"
+                        Command="{Binding ConvertAsyncCommand}"
+                        MinWidth="220" Height="36" />
+
+                    <!--Result -->
+                    <StackPanel Grid.Row="12" Orientation="Horizontal">
+                        <TextBlock Text="Result: " FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Result, StringFormat={}{0:N6}}"/>
+                    </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

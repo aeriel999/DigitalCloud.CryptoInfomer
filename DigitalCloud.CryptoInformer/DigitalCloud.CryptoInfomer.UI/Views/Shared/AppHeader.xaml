@@ -55,8 +55,14 @@
         <Menu Grid.Column="0"
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Center">
-            <MenuItem Header="Home"/>
-            <MenuItem Header="Exchanges"/>
+            <MenuItem Header="Home"
+                      Cursor="Hand"
+                     Command="{Binding DataContext.GoToCoinsListCommand,
+                              RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <MenuItem Header="Converter"
+                      Cursor="Hand"
+                      Command="{Binding DataContext.GoToConverterCommand,
+                              RelativeSource={RelativeSource AncestorType=Window}}"/>
             <MenuItem Header="About"/>
         </Menu>
 
