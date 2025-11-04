@@ -11,7 +11,7 @@ public partial class CoinsListPage : Page
 {
     private readonly Style _defaultStyle;
     private readonly Style _accentStyle;
-    public CoinsListPage()
+    public CoinsListPage(CoinsListViewModel viewModel)
     {
         InitializeComponent();
 
@@ -20,7 +20,7 @@ public partial class CoinsListPage : Page
 
         Top_10_Button.Style = _accentStyle;
 
-        DataContext = App.Current.Services.GetService<CoinsListViewModel>();
+        DataContext = viewModel;
     }
 
     private void Top_10_Button_Click(object sender, RoutedEventArgs e)

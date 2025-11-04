@@ -6,9 +6,13 @@ namespace DigitalCloud.CryptoInformer.Application.Interfaces;
 
 public interface ICoinGeckoClient
 {
-    public Task<ErrorOr<List<GetCurrenciesListResponse>>>GetListOfCurrenciesAsync(GetCurrenciesListRequest reuest);
+    public Task<ErrorOr<List<GetCurrenciesListResponse>>>GetListOfCurrenciesAsync(
+        GetCurrenciesListRequest reuest);
 
     public Task<ErrorOr<List<GetCurrenciesListResponse>>> GetListOfCurrenciesAsync();
 
-    public Task<ErrorOr<GetCoinDetailsResponse>> GetDetailsInformationForCoinAsync(GetCoinDetailsRequest request);
+    public Task<ErrorOr<GetCoinDetailsResponse>> GetDetailsInformationForCoinAsync(
+        GetCoinDetailsRequest request);
+
+    public Task<ErrorOr<List<GetCoinsListForDropdawnResponse>>> GetCoinsListForDropdawnAsync();
 }

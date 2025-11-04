@@ -8,8 +8,6 @@ using DigitalCloud.CryptoInformer.Application.Interfaces;
 using DigitalCloud.CryptoInformer.Application.Models.Requests;
 using DigitalCloud.CryptoInformer.Application.Models.Response;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
 

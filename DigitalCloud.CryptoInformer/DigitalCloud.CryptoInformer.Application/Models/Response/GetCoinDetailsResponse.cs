@@ -48,15 +48,15 @@ public class GetCoinDetailsResponse
 
     [JsonPropertyName("max_supply")]
     public decimal? MaxSupply { get; init; }
-
-    
 }
+
 
 public class CoinImageData
 {
     [JsonPropertyName("small")]
     public string? CoinIcon { get; init; }
 }
+
 
 public class MarketData
 {
@@ -89,17 +89,20 @@ public class MarketData
     public Sparkline7D? Sparkline7D { get; init; }
 }
 
+
 public class Sparkline7D
 {
     [JsonPropertyName("price")]
     public List<double> Price { get; init; } = [];
 }
 
+
 public class CoinLinks
 {
     [JsonPropertyName("homepage")]
     public string[] Homepage { get; init; } = [];
 }
+
 
 public class CoinMarketRow
 {
@@ -121,6 +124,7 @@ public class CoinMarketRow
     [JsonPropertyName("trade_url")]
     public string? TradeUrl { get; init; }
 }
+
 
 public class ExchangeInfo
 {

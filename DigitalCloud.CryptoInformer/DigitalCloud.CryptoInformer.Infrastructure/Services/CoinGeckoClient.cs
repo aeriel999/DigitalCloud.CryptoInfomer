@@ -3,17 +3,25 @@ using DigitalCloud.CryptoInformer.Application.Models.Requests;
 using DigitalCloud.CryptoInformer.Application.Models.Response;
 using DigitalCloud.CryptoInformer.Infrastructure.Helpers;
 using ErrorOr;
+using Microsoft.Extensions.Caching.Memory;
 using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace DigitalCloud.CryptoInformer.Infrastructure.Services;
 
-internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoClient
+internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache cache) : ICoinGeckoClient
 {
     public async Task<ErrorOr<List<GetCurrenciesListResponse>>>GetListOfCurrenciesAsync(
 		GetCurrenciesListRequest request)
     {
-		try
+        var cacheKey =
+            $"{request.Currency}:{request.CurrencyListOrder}:{request.ItemsPerPage}:{request.NumberOfPage}:" +
+            $"{request.IncludeSparkline}:{request.TimeFrame}:{request.Locale}:{request.CurrenciesPricePresision}";
+
+        if (cache.TryGetValue(cacheKey, out List<GetCurrenciesListResponse>? cachedPage))
+            return cachedPage!;
+
+        try
 		{
 			var result = await httpClient.GetFromJsonAsync<List<GetCurrenciesListResponse>>(
 				$"{url}/coins/markets?" +
@@ -30,6 +38,8 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
 				return Error.NotFound(
 						  code: "Empty.Result",
 						  description: LocalizationHelper.Get("EmptyResult"));
+
+            cache.Set(cacheKey, result, TimeSpan.FromHours(24));
 
             return result;
 		}
@@ -107,6 +117,45 @@ internal class CoinGeckoClient(HttpClient httpClient, string url) : ICoinGeckoCl
                 $"&community_data={request.IncludeCommunityData.ToString().ToLowerInvariant()}"+
                 $"&developer_data={request.IncludeDeveloperData.ToString().ToLowerInvariant()}"+
                 $"&sparkline={request.IncludeSparkline.ToString().ToLowerInvariant()}");
+
+            if (result == null)
+                return Error.NotFound(
+                          code: "Empty.Result",
+                          description: LocalizationHelper.Get("EmptyResult"));
+
+            return result;
+        }
+        catch (HttpRequestException)
+        {
+            return Error.Failure(
+                   code: "Network.Error",
+                   description: LocalizationHelper.Get("NetworkError"));
+        }
+        catch (JsonException)
+        {
+            return Error.Failure(
+                    code: "Json.ParseError",
+                    description: LocalizationHelper.Get("JsonParseError"));
+        }
+        catch (Exception)
+        {
+            return Error.Failure(
+                    code: "General.Failure",
+                    description: LocalizationHelper.Get("GeneralFailure"));
+        }
+    }
+
+    public async Task<ErrorOr<List<GetCoinsListForDropdawnResponse>>> GetCoinsListForDropdawnAsync()
+    {
+        const string cacheKey = "coins.list";
+
+        if (cache.TryGetValue(cacheKey, out List<GetCoinsListForDropdawnResponse>? cachedList))
+            return cachedList!;
+
+        try
+        {
+            var result = await httpClient.GetFromJsonAsync<List<GetCoinsListForDropdawnResponse>>(
+                $"{url}/coins/list");
 
             if (result == null)
                 return Error.NotFound(
