@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalCloud.CryptoInformer.Application.Helpers.Constants;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
-using DigitalCloud.CryptoInformer.Application.Models.Response;
+using DigitalCloud.CryptoInformer.Application.Models.Requests;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows.Data;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 {
@@ -13,58 +14,105 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
     {
         private readonly ICoinGeckoClient _coinGeckoClient;
 
+
+        [ObservableProperty] private string? _fromCurrencyId;
+        [ObservableProperty] private string? _toCurrencyId;
+
+        [ObservableProperty]
+        private PlotModel? _priceLinePlotModel;
+
         public ConverterViewModel(ICoinGeckoClient coinGeckoClient)
         {
             _coinGeckoClient = coinGeckoClient;
-            LoadAsyncCommand = new AsyncRelayCommand(LoadAsync);
-            _ = LoadAsync();
+
+            LoadInitialCoinListCommand = new AsyncRelayCommand(LoadInitialCoinListAsync);
+
+            _ = LoadInitialCoinListAsync();
         }
 
-        public sealed record DropdownCoin(string Display, string Value);
 
-        [ObservableProperty] private ObservableCollection<DropdownCoin> _fromCurrencies = new();
-        public ICollectionView FromCurrenciesView { get; private set; } = null!;
+        public ObservableCollection<DropdownCoin> FromCoins { get; } = new();
+        public ObservableCollection<DropdownCoin> ToCoins { get; } = new();
 
-        [ObservableProperty] private string? _selectedFromId;
 
-        private string _filterText = string.Empty;
-        public string FilterText
+        public IAsyncRelayCommand LoadInitialCoinListCommand { get; }
+
+
+        public sealed record DropdownCoin(string Id, string Display);
+
+
+        private async Task LoadInitialCoinListAsync()
         {
-            get => _filterText;
-            set
-            {
-                if (SetProperty(ref _filterText, value))
-                    FromCurrenciesView?.Refresh();
-            }
-        }
+            var res = await _coinGeckoClient.GetCoinsListForDropdawnAsync(
+                new GetCoinsListForDropdawnRequest(250, 1));
 
-        public IAsyncRelayCommand LoadAsyncCommand { get; }
-
-        private async Task LoadAsync()
-        {
-            var res = await _coinGeckoClient.GetCoinsListForDropdawnAsync();
             if (res.IsError) return;
 
-            var comparer = StringComparer.Create(CultureInfo.CurrentCulture, ignoreCase: true);
+            FromCoins.Clear();
 
-            var list = res.Value
-                .Select(x => new DropdownCoin($"{x.Name} ({x.Symbol.ToUpperInvariant()})", x.Id))
-                .OrderBy(x => char.IsLetter(x.Display.FirstOrDefault()) ? 0 : 1)
-                .ThenBy(x => x.Display, comparer)
+            ToCoins.Clear();
+
+            var all = res.Value
+                .Select(x => new DropdownCoin(x.Id, $"{x.Name} ({x.Symbol.ToUpperInvariant()})"))
                 .ToList();
 
-            FromCurrencies = new ObservableCollection<DropdownCoin>(list);
+            foreach (var c in all)
+                FromCoins.Add(c);
 
-            FromCurrenciesView = CollectionViewSource.GetDefaultView(FromCurrencies);
-            FromCurrenciesView.Filter = o =>
+            foreach (var c in all.Skip(1))
+                ToCoins.Add(c);
+
+            FromCurrencyId ??= FromCoins.FirstOrDefault()?.Id;
+        }
+
+        [RelayCommand]
+        private async Task LoadPriceChartAsync()
+        {
+            var request = new GetMarketChartByIdRequest(
+                                CoinId: FromCurrencyId!,
+                                VsCurrency: MarketCurrencies.USD,
+                                Days: "7",
+                                MarketChartInterval: null,
+                                CurrencyPricePrecision: CurrencyPricePrecision.FULL
+                            );
+
+            var response = await _coinGeckoClient.GetDataForMarketChart(request);
+
+            if (response.IsError || response.Value is null)
+                return;
+
+            var data = response.Value.Prices;
+
+            var model = new PlotModel();
+            model.Axes.Add(new DateTimeAxis
             {
-                if (string.IsNullOrWhiteSpace(FilterText)) return true;
-                var s = FilterText.Trim();
-                var item = (DropdownCoin)o;
-                return item.Display.Contains(s, StringComparison.CurrentCultureIgnoreCase);
-            };
+                Position = AxisPosition.Bottom,
+                StringFormat = "MM-dd",
+                IntervalType = DateTimeIntervalType.Days
+            });
+            model.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = MarketCurrencies.USD.ToUpperInvariant()
+            });
 
-            SelectedFromId ??= FromCurrencies.FirstOrDefault()?.Value;
+            var series = new LineSeries { StrokeThickness = 2 };
+
+            foreach (var p in data)
+            {
+                var tsMs = (long)p[0];
+                var price = p[1];
+                var x = DateTimeAxis.ToDouble(DateTimeOffset.FromUnixTimeMilliseconds(tsMs).UtcDateTime);
+                series.Points.Add(new DataPoint(x, price));
+            }
+
+            model.Series.Add(series);
+            PriceLinePlotModel = model;
+        }
+
+        partial void OnFromCurrencyIdChanged(string? value)
+        {
+            _ = LoadPriceChartAsync();
         }
     }
 }

@@ -14,5 +14,8 @@ public interface ICoinGeckoClient
     public Task<ErrorOr<GetCoinDetailsResponse>> GetDetailsInformationForCoinAsync(
         GetCoinDetailsRequest request);
 
-    public Task<ErrorOr<List<GetCoinsListForDropdawnResponse>>> GetCoinsListForDropdawnAsync();
+    public Task<ErrorOr<List<GetCoinsListForDropdawnResponse>>> GetCoinsListForDropdawnAsync(
+        GetCoinsListForDropdawnRequest request);
+
+    public Task<ErrorOr<MarketChartResponse>> GetDataForMarketChart(GetMarketChartByIdRequest request);
 }

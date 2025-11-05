@@ -29,7 +29,7 @@
                 <Grid>
                     <TextBlock Text="Price Chart (7d)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
                            VerticalAlignment="Top"/>
-                    <!--<oxy:PlotView Model="{Binding LinePlotModel}" Margin="0,28,0,0"/>-->
+                    <oxy:PlotView Model="{Binding PriceLinePlotModel}" Margin="0,28,0,0"/>
                 </Grid>
             </Border>
 
@@ -71,52 +71,41 @@
 
                 <!-- Main Coin -->
                 <TextBlock Grid.Row="1" Text="From" Margin="0,4,0,4" />
-                <!-- Поле пошуку (опц., якщо треба окремо): -->
-                <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8"/>
 
-                <ComboBox
-                    ItemsSource="{Binding FromCurrenciesView}"
-                    DisplayMemberPath="Display"
-                    SelectedValuePath="Value"
-                    SelectedValue="{Binding SelectedFromId}"
-                    IsEditable="True"
-                    IsTextSearchEnabled="False"
-                    StaysOpenOnEdit="True"
-                    MaxDropDownHeight="300">            
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel
-                                IsVirtualizing="True"
-                                VirtualizationMode="Recycling" />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                <ComboBox Grid.Row="2"
+                          MinWidth="200" 
+                          HorizontalAlignment="Left" 
+                          ItemsSource="{Binding FromCoins}" 
+                          DisplayMemberPath="Display"
+                          SelectedValuePath="Id"
+                          SelectedIndex="0" />
 
 
                 <!-- Amount -->
                     <TextBlock Grid.Row="4" Text="Amount" Margin="0,4,0,4" />
-                    <!--<TextBox Grid.Row="5"
+                    <TextBox Grid.Row="5"
                          Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
-                         MinWidth="220" />-->
+                         MinWidth="220" />
 
                     <!-- Convert Coin -->
                     <TextBlock Grid.Row="7" Text="To" Margin="0,4,0,4" />
-                    <!--<ComboBox Grid.Row="8"
-                          ItemsSource="{Binding ToCurrencies}"
-                          SelectedItem="{Binding SelectedToCode}"
-                          MinWidth="220" />-->
+                    <ComboBox Grid.Row="8"
+                              ItemsSource="{Binding ToCoins}"
+                              MinWidth="220"
+                              DisplayMemberPath="Display"
+                              SelectedValuePath="Id"/>
 
                     <!--Convert Btn-->
-                    <!--<Button Grid.Row="10"
+                    <Button Grid.Row="10"
                         Content="Convert"
                         Command="{Binding ConvertAsyncCommand}"
                         MinWidth="220" Height="36" />
 
-                    --><!--Result --><!--
+                    <!--Result -->
                     <StackPanel Grid.Row="12" Orientation="Horizontal">
                         <TextBlock Text="Result: " FontWeight="SemiBold"/>
                         <TextBlock Text="{Binding Result, StringFormat={}{0:N6}}"/>
-                    </StackPanel>-->
+                    </StackPanel>
             </Grid>
         </Border>
     </Grid>

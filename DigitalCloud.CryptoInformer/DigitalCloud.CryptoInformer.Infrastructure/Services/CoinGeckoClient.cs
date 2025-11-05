@@ -65,6 +65,11 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
 
     public async Task<ErrorOr<List<GetCurrenciesListResponse>>> GetListOfCurrenciesAsync()
     {
+        const string cacheKey = "coins.default";
+
+        if (cache.TryGetValue(cacheKey, out List<GetCurrenciesListResponse>? cachedList))
+            return cachedList!;
+
         try
         {
             var result = await httpClient.GetFromJsonAsync<List<GetCurrenciesListResponse>>(
@@ -80,6 +85,8 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
                 return Error.NotFound(
                           code: "Empty.Result",
                           description: LocalizationHelper.Get("EmptyResult"));
+
+            cache.Set(cacheKey, result, TimeSpan.FromHours(24));
 
             return result;
         }
@@ -145,9 +152,10 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
         }
     }
 
-    public async Task<ErrorOr<List<GetCoinsListForDropdawnResponse>>> GetCoinsListForDropdawnAsync()
+    public async Task<ErrorOr<List<GetCoinsListForDropdawnResponse>>> GetCoinsListForDropdawnAsync(
+        GetCoinsListForDropdawnRequest request)
     {
-        const string cacheKey = "coins.list";
+        var cacheKey = $"coins.list_{request.NumderOfPage}";
 
         if (cache.TryGetValue(cacheKey, out List<GetCoinsListForDropdawnResponse>? cachedList))
             return cachedList!;
@@ -155,7 +163,55 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
         try
         {
             var result = await httpClient.GetFromJsonAsync<List<GetCoinsListForDropdawnResponse>>(
-                $"{url}/coins/list");
+                $"{url}/coins/markets?" +
+                "vs_currency=usd" +
+                "&order=market_cap_desc" +
+                $"&per_page={request.RecordsPerPage}" +
+                $"&page={request.NumderOfPage}" +
+                "&sparkline=false" +
+                "&price_change_percentage=24h");
+
+            if (result == null)
+                return Error.NotFound(
+                          code: "Empty.Result",
+                          description: LocalizationHelper.Get("EmptyResult"));
+
+            cache.Set(cacheKey, result, TimeSpan.FromHours(24));
+
+            return result;
+        }
+        catch (HttpRequestException)
+        {
+            return Error.Failure(
+                   code: "Network.Error",
+                   description: LocalizationHelper.Get("NetworkError"));
+        }
+        catch (JsonException)
+        {
+            return Error.Failure(
+                    code: "Json.ParseError",
+                    description: LocalizationHelper.Get("JsonParseError"));
+        }
+        catch (Exception)
+        {
+            return Error.Failure(
+                    code: "General.Failure",
+                    description: LocalizationHelper.Get("GeneralFailure"));
+        }
+    }
+
+    public async Task<ErrorOr<MarketChartResponse>> GetDataForMarketChart(GetMarketChartByIdRequest request)
+    {
+        try
+        {
+            var result = await httpClient.GetFromJsonAsync<MarketChartResponse>(
+                $"{url}/coins/" +
+                $"{request.CoinId}/market_chart?" +
+                $"vs_currency={request.VsCurrency}" +
+                $"&days={request.Days}" +
+                $"&interval={request.MarketChartInterval}" +
+                $"&precision={request.CurrencyPricePrecision}");
+
 
             if (result == null)
                 return Error.NotFound(
