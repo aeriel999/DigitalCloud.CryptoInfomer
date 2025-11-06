@@ -5,8 +5,8 @@ using DigitalCloud.CryptoInfomer.UI.Views.Pages;
 using DigitalCloud.CryptoInformer.Application.Helpers.Constants;
 using DigitalCloud.CryptoInformer.Application.Helpers.Enums;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
-using DigitalCloud.CryptoInformer.Application.Models.Requests;
-using DigitalCloud.CryptoInformer.Application.Models.Response;
+using DigitalCloud.CryptoInformer.Application.Models.Requests.Dropdown;
+using DigitalCloud.CryptoInformer.Application.Models.Response.Currency;
 using System.Collections.ObjectModel;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels;
@@ -17,19 +17,24 @@ public partial class CoinsListViewModel : ObservableObject
     private readonly IDigitalCloudNavigationService _navigation;
 
 
+    private const int ITEM_PER_PAGE = 10;
+
+
     [ObservableProperty]
     private ObservableCollection<GetCurrenciesListResponse> _currencies = new();
+
 
     [ObservableProperty]
     private bool _isMoreBtnVisible;
 
+
     [ObservableProperty]
     private bool _isLoading;
 
-    private const int ITEM_PER_PAGE = 10;
 
     private int? _amountOfPage;
     private int _numberOfPage;
+
 
     public CoinsListViewModel(ICoinGeckoClient coinGeckoClient, IDigitalCloudNavigationService navigation)
     {
@@ -57,6 +62,8 @@ public partial class CoinsListViewModel : ObservableObject
     public IAsyncRelayCommand SetAllListModeCommand { get; }
     public IAsyncRelayCommand LoadNextPartForCurenciesListCommand { get; }
 
+
+
     [RelayCommand]
     private void OpenCoinDetails(string coinId)
     {
@@ -65,6 +72,7 @@ public partial class CoinsListViewModel : ObservableObject
 
         _navigation.NavigateTo<CoinDetailsPage, string>(coinId);
     }
+
 
     private async Task InitialLoadCurrenciesAsync()
     {
@@ -85,6 +93,7 @@ public partial class CoinsListViewModel : ObservableObject
         finally { IsLoading = false; }
     }
 
+
     private async Task SetTop10ModeAsync()
     {
         _numberOfPage = 1;
@@ -93,6 +102,7 @@ public partial class CoinsListViewModel : ObservableObject
 
         await LoadFirstTop10CurrenciesAsync();
     }
+
 
     private async Task SetTop100ModeAsync()
     {
@@ -103,6 +113,7 @@ public partial class CoinsListViewModel : ObservableObject
         await LoadFirstTop10CurrenciesAsync();
     }
 
+
     private async Task SetAllListModeAsync()
     {
         _numberOfPage = 1;
@@ -112,12 +123,14 @@ public partial class CoinsListViewModel : ObservableObject
         await LoadFirstTop10CurrenciesAsync();
     }
 
+
     private async Task LoadNextPartForCurenciesListAsync()
     {
         _numberOfPage++;
 
         await LoadFirstTop10CurrenciesAsync();
     }
+
 
     private async Task LoadFirstTop10CurrenciesAsync()
     {

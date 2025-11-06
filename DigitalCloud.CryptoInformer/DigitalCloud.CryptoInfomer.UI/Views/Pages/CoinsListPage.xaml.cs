@@ -1,5 +1,4 @@
 ﻿using DigitalCloud.CryptoInfomer.UI.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,6 +10,8 @@ public partial class CoinsListPage : Page
 {
     private readonly Style _defaultStyle;
     private readonly Style _accentStyle;
+
+
     public CoinsListPage(CoinsListViewModel viewModel)
     {
         InitializeComponent();
@@ -22,6 +23,7 @@ public partial class CoinsListPage : Page
 
         DataContext = viewModel;
     }
+
 
     private void Top_10_Button_Click(object sender, RoutedEventArgs e)
     {

@@ -20,6 +20,7 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Pages
             DataContext = _coinDetailsViewModel;
         }
 
+
         public async void OnNavigatedTo(string coinId)
         {
             if (string.IsNullOrWhiteSpace(coinId))

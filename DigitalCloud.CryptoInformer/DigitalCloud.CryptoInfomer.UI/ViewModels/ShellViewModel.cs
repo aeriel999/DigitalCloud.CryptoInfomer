@@ -27,12 +27,14 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 
         public enum AppPage { CoinsList, Converter, CoinDetails }
 
+
         partial void OnCurrentPageChanged(AppPage value)
         {
             GoToCoinsListCommand.NotifyCanExecuteChanged();
             GoToConverterCommand.NotifyCanExecuteChanged();
             GoToCoinDetailsCommand.NotifyCanExecuteChanged();
         }
+
 
         [RelayCommand(CanExecute = nameof(CanGoToCoinsList))]
         private void GoToCoinsList()
@@ -42,6 +44,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             CurrentPage = AppPage.CoinsList;
         }
 
+
         [RelayCommand(CanExecute = nameof(CanGoToConverter))]
         private void GoToConverter()
         {
@@ -49,6 +52,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             _navigationService.NavigateTo<ConverterPage>();
             CurrentPage = AppPage.Converter;
         }
+
 
         [RelayCommand(CanExecute = nameof(CanGoToCoinDetails))]
         private void GoToCoinDetails()

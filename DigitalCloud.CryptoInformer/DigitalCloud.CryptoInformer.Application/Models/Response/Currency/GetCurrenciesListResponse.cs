@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DigitalCloud.CryptoInformer.Application.Models.Response;
+namespace DigitalCloud.CryptoInformer.Application.Models.Response.Currency;
 
 public class GetCurrenciesListResponse
 {

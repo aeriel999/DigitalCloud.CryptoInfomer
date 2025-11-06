@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
-using DigitalCloud.CryptoInformer.Application.Models.Requests;
-using DigitalCloud.CryptoInformer.Application.Models.Response;
+using DigitalCloud.CryptoInformer.Application.Models.Requests.Currency;
+using DigitalCloud.CryptoInformer.Application.Models.Response.Currency;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -14,14 +14,18 @@ public partial class CoinDetailsViewModel : ObservableObject
 {
     private readonly ICoinGeckoClient _coinGeckoClient;
 
+
     [ObservableProperty]
     private GetCoinDetailsResponse? _coinDetails;
+
 
     [ObservableProperty]
     private GetCoinDetailsResponse? _coin;
 
+
     [ObservableProperty]
     private bool _isLoading;
+
 
     public CoinDetailsViewModel(ICoinGeckoClient coinGeckoClient)
     {
@@ -30,14 +34,18 @@ public partial class CoinDetailsViewModel : ObservableObject
         OpenTradeCommand = new RelayCommand<string?>(OpenTrade);
     }
 
+
     public IRelayCommand<string?> OpenTradeCommand { get; }
 
+
     public PlotModel PriceModel { get; } = new();
+
 
     partial void OnCoinChanged(GetCoinDetailsResponse? value)
     {
         BuildChart();
     }
+
 
     public async Task InitializeAsync(string coinId)
     {
@@ -67,6 +75,7 @@ public partial class CoinDetailsViewModel : ObservableObject
         finally { IsLoading = false; }
     }
 
+
     private void OpenTrade(string? url)
     {
         if (string.IsNullOrWhiteSpace(url))
@@ -86,6 +95,8 @@ public partial class CoinDetailsViewModel : ObservableObject
             // error
         }
     }
+
+
     private void BuildChart()
     {
         var prices = Coin?.MarketData?.Sparkline7D?.Price; // List<decimal> з 168 значень

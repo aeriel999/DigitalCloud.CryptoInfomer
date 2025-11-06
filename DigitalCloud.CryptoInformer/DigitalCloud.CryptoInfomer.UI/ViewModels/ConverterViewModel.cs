@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using DigitalCloud.CryptoInformer.Application.Helpers.Constants;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
-using DigitalCloud.CryptoInformer.Application.Models.Requests;
-using DigitalCloud.CryptoInformer.Application.Models.Response;
+using DigitalCloud.CryptoInformer.Application.Models.Requests.Charts;
+using DigitalCloud.CryptoInformer.Application.Models.Requests.Currency;
+using DigitalCloud.CryptoInformer.Application.Models.Response.Dropdowns;
+using ErrorOr;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -50,8 +52,10 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
         //[ObservableProperty] private decimal _amountTo;  
 
 
-        [ObservableProperty]
-        private PlotModel? _priceLinePlotModel;
+        [ObservableProperty] private PlotModel? _priceLinePlotModel;
+
+        [ObservableProperty] private PlotModel? _candlePlotModel;
+
 
         public ConverterViewModel(ICoinGeckoClient coinGeckoClient)
         {
@@ -108,8 +112,6 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                 ToCoins.Add(c);
 
             SelectedFromId = _сoinListForDropdown[0].Id;
-
-            
         }
 
 
@@ -123,6 +125,8 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 
             // TODO: rebuild ToCoins list without FromCurrencyCurrentCoin.Id
 
+            Result = null;
+
             ConvertAsyncCommand.NotifyCanExecuteChanged();
         }
                 
@@ -133,6 +137,8 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             ToCurrencyCurrentCoin = _сoinListForDropdown.FirstOrDefault(c => c.Id == value);
 
             // TODO: rebuild FromCoins list without FromCurrencyCurrentCoin.Id
+
+            Result = null;
 
             ConvertAsyncCommand.NotifyCanExecuteChanged();
         }
@@ -163,7 +169,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
         [RelayCommand]
         public async Task LoadPriceChartAsync()
         {
-            var request = new GetMarketChartByIdRequest(
+            var request = new GetDataForListChartRequest(
                                 CoinId: FromCurrencyCurrentCoin!.Id,
                                 VsCurrency: MarketCurrencies.USD,
                                 Days: "7",
@@ -171,7 +177,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                                 CurrencyPricePrecision: CurrencyPricePrecision.FULL
                             );
 
-            var response = await _coinGeckoClient.GetDataForMarketChart(request);
+            var response = await _coinGeckoClient.GetDataForListChart(request);
 
             if (response.IsError || response.Value is null)
                 return;
@@ -181,6 +187,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             PriceLinePlotModel = null;
 
             var model = new PlotModel();
+
             model.Axes.Add(new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
@@ -207,9 +214,71 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             PriceLinePlotModel = model;
         }
 
+        [RelayCommand]
+        public async Task LoadCandlesAsync()
+        {
+            if (FromCurrencyCurrentCoin is null) return;
+
+            var req = new GetDataForCandlestickChartRequest(
+                                    FromCurrencyCurrentCoin.Id, 
+                                    MarketCurrencies.USD, 
+                                    DaysPeriod.THIRTY_DAYS, 
+                                    CurrencyPricePrecision.FULL);
+
+            var res = await _coinGeckoClient.GetDataForCandlestickChart(req); 
+
+            if (res.IsError) return;
+
+            var candles = res.Value;  
+
+            CandlePlotModel = null;
+
+            var model = new PlotModel();
+
+            model.Axes.Add(new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+                StringFormat = "MM-dd",
+                IntervalType = DateTimeIntervalType.Days,
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot
+            });
+            model.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = MarketCurrencies.USD.ToUpperInvariant(),
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot
+            });
+
+            var series = new CandleStickSeries
+            {
+                CandleWidth = 0.6
+            };
+
+            foreach (var c in candles)
+            {
+                var x = DateTimeAxis.ToDouble(
+                    DateTimeOffset.FromUnixTimeMilliseconds(c.TimestampMs).UtcDateTime);
+
+                series.Items.Add(new HighLowItem(
+                                     x,
+                                     (double)c.High,
+                                     (double)c.Low,
+                                     (double)c.Open,
+                                     (double)c.Close));
+
+            }
+
+            model.Series.Add(series);
+
+            CandlePlotModel = model;
+        }
         partial void OnFromCurrencyCurrentCoinChanged(GetCoinsListForDropdawnResponse? value)
         {
             _ = LoadPriceChartAsync();
+
+            _ = LoadCandlesAsync();
         }
     }
 }

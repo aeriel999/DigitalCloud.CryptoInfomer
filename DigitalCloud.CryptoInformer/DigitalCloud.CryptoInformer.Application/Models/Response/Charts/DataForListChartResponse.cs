@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DigitalCloud.CryptoInformer.Application.Models.Response;
+namespace DigitalCloud.CryptoInformer.Application.Models.Response.Charts;
 
-public class MarketChartResponse
+public class DataForListChartResponse
 {
     [JsonPropertyName("prices")]
     public double[][] Prices { get; set; } = Array.Empty<double[]>();

@@ -27,8 +27,17 @@
                 Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
                 BorderBrush="#E6E6E6" BorderThickness="1" CornerRadius="12">
                 <Grid>
-                    <TextBlock Text="Price Chart (7d)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
-                           VerticalAlignment="Top"/>
+                    <TextBlock FontSize="16"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Top"
+                               Margin="0,0,0,8">
+                        <Run Text="Price Chart (7d) — "/>
+                        <Run Text="{Binding FromCurrencyCurrentCoin.Name}" />
+                        <Run Text=" (" />
+                        <Run Text="{Binding FromCurrencyCurrentCoin.Symbol}" />
+                        <Run Text=")" />    
+                    </TextBlock>
+
                     <oxy:PlotView x:Name="PricePlot"
                                   Model="{Binding PriceLinePlotModel}"
                                   Unloaded="PricePlot_Unloaded" 
@@ -43,9 +52,22 @@
                 Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
                 BorderBrush="#E6E6E6" BorderThickness="1" CornerRadius="12">
                 <Grid>
-                    <TextBlock Text="Candlestick Chart (7d)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
-                           VerticalAlignment="Top"/>
-                    <!--<oxy:PlotView Model="{Binding CandlePlotModel}" Margin="0,28,0,0"/>-->
+                    <TextBlock FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,8"
+                               VerticalAlignment="Top">
+                            <Run Text="Candlestick Chart (30d) — "/>
+                            <Run Text="{Binding FromCurrencyCurrentCoin.Name}" />
+                            <Run Text=" (" />
+                            <Run Text="{Binding FromCurrencyCurrentCoin.Symbol}" />
+                            <Run Text=")" />        
+                    </TextBlock>
+
+                    <oxy:PlotView x:Name="CandlePlot"
+                                  Model="{Binding CandlePlotModel}" 
+                                  Unloaded="CandlePlot_Unloaded" 
+                                  Loaded="CandlePlot_Loaded"
+                                  Margin="0,28,0,0"/>
                 </Grid>
             </Border>
         </Grid>

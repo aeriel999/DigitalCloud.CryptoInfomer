@@ -1,6 +1,6 @@
-﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests;
+﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests.Charts;
 
-public record GetMarketChartByIdRequest(
+public record GetDataForListChartRequest(
     string CoinId,
     string VsCurrency,
     string Days,

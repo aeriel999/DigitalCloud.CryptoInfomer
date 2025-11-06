@@ -1,4 +1,4 @@
-﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests;
+﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests.Currency;
 
 public record GetCoinDetailsRequest(
     string CoinId,

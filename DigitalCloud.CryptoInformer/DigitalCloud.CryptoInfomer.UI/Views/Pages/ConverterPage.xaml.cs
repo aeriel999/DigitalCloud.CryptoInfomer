@@ -15,6 +15,7 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Pages
             DataContext = viewModel;
         }
 
+
         private void PricePlot_Loaded(object sender, RoutedEventArgs e)
         {
             if (DataContext is ConverterViewModel vm
@@ -25,12 +26,33 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Pages
             }
         }
 
+
         private void PricePlot_Unloaded(object sender, RoutedEventArgs e)
         {
             var pv = (OxyPlot.Wpf.PlotView)sender;
             pv.Model = null;
             if (DataContext is ConverterViewModel vm)
                 vm.PriceLinePlotModel = null;
+        }
+
+
+        private void CandlePlot_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is ConverterViewModel vm
+                && vm.FromCurrencyCurrentCoin is not null
+                && vm.CandlePlotModel is null)
+            {
+                _ = vm.LoadCandlesAsync();
+            }
+        }
+
+
+        private void CandlePlot_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var pv = (OxyPlot.Wpf.PlotView)sender;
+            pv.Model = null;
+            if (DataContext is ConverterViewModel vm)
+                vm.CandlePlotModel = null;
         }
     }
 }

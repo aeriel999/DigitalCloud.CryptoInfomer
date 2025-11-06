@@ -10,9 +10,7 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Shell;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow(
-            ShellViewModel viewModel,
-            IDigitalCloudNavigationService navigation)
+    public MainWindow(ShellViewModel viewModel, IDigitalCloudNavigationService navigation)
     {
         InitializeComponent();
 

@@ -1,4 +1,4 @@
-﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests;
+﻿namespace DigitalCloud.CryptoInformer.Application.Models.Requests.Dropdown;
 
 public record GetCurrenciesListRequest(
     int ItemsPerPage,
