@@ -58,6 +58,8 @@
             <MenuItem Header="Home"     Command="{Binding GoToCoinsListCommand}"   Cursor="Hand"/>
             <MenuItem Header="Converter" Command="{Binding GoToConverterCommand}"   Cursor="Hand"/>
             <MenuItem Header="About" />
+            
+            
         </Menu>
 
         <!--Logo-->

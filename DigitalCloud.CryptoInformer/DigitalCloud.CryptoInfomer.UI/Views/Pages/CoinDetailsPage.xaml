@@ -150,10 +150,13 @@
                 Padding="12">
                 <StackPanel>
                     <TextBlock Text="Price chart" 
-                   FontWeight="Bold" 
-                   Margin="0 0 0 8"/>
+                               FontWeight="Bold" 
+                               Margin="0 0 0 8"/>
 
-                    <oxy:PlotView Model="{Binding PriceModel}"
+                    <oxy:PlotView x:Name="LineChart"
+                                  Model="{Binding PriceModel}"
+                                  Unloaded="LineChart_Unloaded" 
+                                  Loaded="LineChart_Loaded"
                                   Height="180"
                                   Background="#F6F6F6"
                                   BorderBrush="#DDDDDD"

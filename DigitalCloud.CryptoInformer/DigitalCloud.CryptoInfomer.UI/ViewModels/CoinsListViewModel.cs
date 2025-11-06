@@ -83,7 +83,7 @@ public partial class CoinsListViewModel : ObservableObject
             var result = await _coinGeckoClient.GetListOfCurrenciesAsync();
             if (result.IsError)
             {
-
+                //TODO make error visualization
                 return;
             }
 
@@ -157,11 +157,14 @@ public partial class CoinsListViewModel : ObservableObject
 
         var result = await _coinGeckoClient.GetListOfCurrenciesAsync(_currentRequest);
 
-        if (result.IsError)
-            return;
+            if (result.IsError)
+            {
+                //TODO make error visualization
+                return;
+            }
 
-         // Hide "More" button after loading all Top100 pages
-         if (_amountOfPage == null && result.Value.Count < ITEM_PER_PAGE)
+            // Hide "More" button after loading all Top100 pages
+            if (_amountOfPage == null && result.Value.Count < ITEM_PER_PAGE)
                  IsMoreBtnVisible = false;
 
             foreach (var item in result.Value)

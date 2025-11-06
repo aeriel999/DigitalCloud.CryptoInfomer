@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using System.Resources;
 
+
 namespace DigitalCloud.CryptoInformer.Infrastructure.Helpers;
+
 
 public static class LocalizationHelper
 {

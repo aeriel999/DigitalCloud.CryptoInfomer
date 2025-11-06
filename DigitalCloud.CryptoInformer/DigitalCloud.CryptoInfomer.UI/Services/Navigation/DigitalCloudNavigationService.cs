@@ -16,6 +16,7 @@ namespace DigitalCloud.CryptoInfomer.UI.Services.Navigation
             _serviceProvider = serviceProvider;
         }
 
+        public event Action<Type>? Navigated;
 
         public void Initialize(Frame frame)
         {
@@ -46,6 +47,8 @@ namespace DigitalCloud.CryptoInfomer.UI.Services.Navigation
                 navPage.OnNavigatedTo(parameter);
 
             _frame.Navigate(page);
+
+            Navigated?.Invoke(typeof(TPage));
         }
     }
 }

@@ -3,36 +3,44 @@ using CommunityToolkit.Mvvm.Input;
 using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
 using DigitalCloud.CryptoInfomer.UI.Views.Pages;
 
+
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 {
     public partial class ShellViewModel : ObservableObject
     {
-        private readonly IDigitalCloudNavigationService _navigationService;
+       private readonly IDigitalCloudNavigationService _navigationService;
+
+
+       public enum AppPage { CoinsList, Converter, CoinDetails }
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(GoToCoinsListCommand))]
+        [NotifyCanExecuteChangedFor(nameof(GoToConverterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(GoToCoinDetailsCommand))]
+        private AppPage _currentPage;
 
         private bool CanGoToCoinsList() => CurrentPage != AppPage.CoinsList;
         private bool CanGoToConverter() => CurrentPage != AppPage.Converter;
         private bool CanGoToCoinDetails() => CurrentPage != AppPage.CoinDetails;
 
 
-        [ObservableProperty]
-        private AppPage _currentPage;
-
         public ShellViewModel(IDigitalCloudNavigationService navigationService)
         {
             _navigationService = navigationService;
+
+            _navigationService.Navigated += OnNavigated; // added
 
             CurrentPage = AppPage.CoinsList;
         }
 
 
-        public enum AppPage { CoinsList, Converter, CoinDetails }
-
-
-        partial void OnCurrentPageChanged(AppPage value)
+        private void OnNavigated(Type pageType)
         {
-            GoToCoinsListCommand.NotifyCanExecuteChanged();
-            GoToConverterCommand.NotifyCanExecuteChanged();
-            GoToCoinDetailsCommand.NotifyCanExecuteChanged();
+            CurrentPage =
+                pageType == typeof(CoinsListPage) ? AppPage.CoinsList :
+                pageType == typeof(ConverterPage) ? AppPage.Converter :
+                pageType == typeof(CoinDetailsPage) ? AppPage.CoinDetails :
+                CurrentPage;
         }
 
 
@@ -44,7 +52,6 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             CurrentPage = AppPage.CoinsList;
         }
 
-
         [RelayCommand(CanExecute = nameof(CanGoToConverter))]
         private void GoToConverter()
         {
@@ -52,7 +59,6 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             _navigationService.NavigateTo<ConverterPage>();
             CurrentPage = AppPage.Converter;
         }
-
 
         [RelayCommand(CanExecute = nameof(CanGoToCoinDetails))]
         private void GoToCoinDetails()

@@ -2,6 +2,7 @@
 
 namespace DigitalCloud.CryptoInformer.Application.Models.Response.Currency;
 
+//TODO check and delete unnecessary items
 public class GetCoinDetailsResponse
 {
     [JsonPropertyName("id")]

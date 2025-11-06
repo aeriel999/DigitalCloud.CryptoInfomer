@@ -38,7 +38,8 @@ public partial class CoinDetailsViewModel : ObservableObject
     public IRelayCommand<string?> OpenTradeCommand { get; }
 
 
-    public PlotModel PriceModel { get; } = new();
+    [ObservableProperty] 
+    private PlotModel? _priceModel = new(); 
 
 
     partial void OnCoinChanged(GetCoinDetailsResponse? value)
@@ -66,7 +67,7 @@ public partial class CoinDetailsViewModel : ObservableObject
 
             if (result.IsError)
             {
-
+                //TODO make error visualization
                 return;
             }
 
@@ -92,29 +93,34 @@ public partial class CoinDetailsViewModel : ObservableObject
         }
         catch
         {
-            // error
+            //TODO make error visualization
         }
     }
 
 
-    private void BuildChart()
+    public void BuildChart()
     {
-        var prices = Coin?.MarketData?.Sparkline7D?.Price; // List<decimal> з 168 значень
-        PriceModel.Series.Clear();
-        PriceModel.Axes.Clear();
+        if (PriceModel is null) 
+            PriceModel = new PlotModel(); 
 
+        var prices = Coin?.MarketData?.Sparkline7D?.Price;
         if (prices is null || prices.Count == 0)
         {
+            PriceModel!.Series.Clear();   
+            PriceModel.Axes.Clear();      
             PriceModel.InvalidatePlot(true);
             return;
         }
+
+        PriceModel!.Series.Clear();
+        PriceModel.Axes.Clear();
 
         var startUtc = DateTimeOffset.UtcNow.AddDays(-7);
 
         var series = new LineSeries { MarkerType = MarkerType.None };
         for (int i = 0; i < prices.Count; i++)
         {
-            var tLocal = startUtc.AddHours(i).ToLocalTime().DateTime;  // або залишай .UtcDateTime
+            var tLocal = startUtc.AddHours(i).ToLocalTime().DateTime;
             series.Points.Add(DateTimeAxis.CreateDataPoint(tLocal, (double)prices[i]));
         }
 
@@ -122,7 +128,7 @@ public partial class CoinDetailsViewModel : ObservableObject
         {
             Position = AxisPosition.Bottom,
             StringFormat = "dd.MM HH:mm",
-            IntervalType = DateTimeIntervalType.Hours,   // підпис під годинний крок
+            IntervalType = DateTimeIntervalType.Hours,
             MajorGridlineStyle = LineStyle.None,
             MinorGridlineStyle = LineStyle.None
         });
