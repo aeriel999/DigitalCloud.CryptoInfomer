@@ -2,6 +2,6 @@
 {
     public interface INavigatable<in TParam>
     {
-        void OnNavigatedTo(TParam parameter);
+        public void OnNavigatedTo(TParam parameter);
     }
 }

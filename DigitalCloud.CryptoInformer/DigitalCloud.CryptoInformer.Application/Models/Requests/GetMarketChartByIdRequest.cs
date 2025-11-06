@@ -4,6 +4,6 @@ public record GetMarketChartByIdRequest(
     string CoinId,
     string VsCurrency,
     string Days,
-    string MarketChartInterval,
+    string? MarketChartInterval,
     string CurrencyPricePrecision);
  

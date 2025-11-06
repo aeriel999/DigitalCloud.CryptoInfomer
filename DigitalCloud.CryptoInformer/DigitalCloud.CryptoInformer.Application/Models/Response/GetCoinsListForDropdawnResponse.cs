@@ -12,4 +12,7 @@ public class GetCoinsListForDropdawnResponse
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    [JsonPropertyName("current_price")]
+    public decimal CurrentPrice { get; set; }
 }

@@ -14,14 +14,14 @@
             <ColumnDefinition Width="2.5*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!--Charts-->
         <Grid Grid.Column="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <!--1 LineChart-->
             <Border Grid.Row="0" Padding="12" Margin="0,0,12,12"
                 Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
@@ -29,7 +29,12 @@
                 <Grid>
                     <TextBlock Text="Price Chart (7d)" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"
                            VerticalAlignment="Top"/>
-                    <oxy:PlotView Model="{Binding PriceLinePlotModel}" Margin="0,28,0,0"/>
+                    <oxy:PlotView x:Name="PricePlot"
+                                  Model="{Binding PriceLinePlotModel}"
+                                  Unloaded="PricePlot_Unloaded" 
+                                  Loaded="PricePlot_Loaded"
+                                  Margin="0,28,0,0"/>
+
                 </Grid>
             </Border>
 
@@ -73,39 +78,52 @@
                 <TextBlock Grid.Row="1" Text="From" Margin="0,4,0,4" />
 
                 <ComboBox Grid.Row="2"
-                          MinWidth="200" 
-                          HorizontalAlignment="Left" 
-                          ItemsSource="{Binding FromCoins}" 
+                          MinWidth="200"
+                          HorizontalAlignment="Left"
+                          ItemsSource="{Binding FromCoins}"
                           DisplayMemberPath="Display"
                           SelectedValuePath="Id"
-                          SelectedIndex="0" />
-
+                          SelectedValue="{Binding SelectedFromId,
+                                                  Mode=TwoWay, 
+                                                  UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- Amount -->
-                    <TextBlock Grid.Row="4" Text="Amount" Margin="0,4,0,4" />
-                    <TextBox Grid.Row="5"
+                <TextBlock Grid.Row="4" Text="Amount" Margin="0,4,0,4" />
+                <TextBox Grid.Row="5"
                          Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
                          MinWidth="220" />
 
-                    <!-- Convert Coin -->
-                    <TextBlock Grid.Row="7" Text="To" Margin="0,4,0,4" />
-                    <ComboBox Grid.Row="8"
-                              ItemsSource="{Binding ToCoins}"
-                              MinWidth="220"
-                              DisplayMemberPath="Display"
-                              SelectedValuePath="Id"/>
+                <!-- Convert Coin -->
+                <TextBlock Grid.Row="7" Text="To" Margin="0,4,0,4" />
+                <ComboBox Grid.Row="8"
+                          ItemsSource="{Binding ToCoins}"
+                          MinWidth="220"
+                          DisplayMemberPath="Display"
+                          SelectedValuePath="Id"
+                          SelectedValue="{Binding SelectedToId, 
+                                                  Mode=TwoWay, 
+                                                  UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <!--Convert Btn-->
-                    <Button Grid.Row="10"
+                <!--Convert Btn-->
+                <Button Grid.Row="10"
                         Content="Convert"
                         Command="{Binding ConvertAsyncCommand}"
                         MinWidth="220" Height="36" />
 
-                    <!--Result -->
-                    <StackPanel Grid.Row="12" Orientation="Horizontal">
-                        <TextBlock Text="Result: " FontWeight="SemiBold"/>
-                        <TextBlock Text="{Binding Result, StringFormat={}{0:N6}}"/>
-                    </StackPanel>
+                <!--Result -->
+                <StackPanel Grid.Row="12" Orientation="Vertical">
+                    <TextBlock FontWeight="SemiBold" Text="Result:"/>
+                    <TextBlock>
+                        <Run Text="{Binding Amount}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding FromCurrencyCurrentCoin.Symbol}" />
+                        <LineBreak/>
+                        <Run Text="= "/>
+                        <Run Text="{Binding Result, StringFormat={}{0:N6}}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding ToCurrencyCurrentCoin.Symbol}" />
+                    </TextBlock>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>

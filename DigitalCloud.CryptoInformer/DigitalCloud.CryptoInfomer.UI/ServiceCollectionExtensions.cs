@@ -1,5 +1,4 @@
-﻿using DigitalCloud.CryptoInfomer.UI.Services.Caching;
-using DigitalCloud.CryptoInfomer.UI.Services.Navigation;
+﻿using DigitalCloud.CryptoInfomer.UI.Services.Navigation;
 using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
 using DigitalCloud.CryptoInfomer.UI.ViewModels;
 using DigitalCloud.CryptoInfomer.UI.Views.Pages;
@@ -24,7 +23,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ConverterPage>();
 
         services.AddSingleton<IDigitalCloudNavigationService, DigitalCloudNavigationService>();
-        services.AddSingleton<ICacheReader, MemoryCacheReader>();
 
         return services;
     }
