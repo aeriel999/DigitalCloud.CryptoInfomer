@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI.Views.Pages"
       mc:Ignorable="d" 
+      JournalEntry.KeepAlive="False"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Search">
 
@@ -18,6 +19,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!--Search block-->
         <Grid Grid.Row="0" 
               Margin="50"                      
               HorizontalAlignment="Stretch">
@@ -35,43 +37,77 @@
 
             <Button Grid.Column="1"
                     Height="40" MinWidth="40"
-                    Command="{Binding SearchCommand}">
-                <TextBlock Text="&#xE721;" FontSize="16" FontFamily="Segoe MDL2 Assets"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    IsDefault="True"  
+                Command="{Binding SearchCommand}">
+                <TextBlock Text="&#xE721;"
+                           FontSize="16"
+                           FontFamily="Segoe MDL2 Assets"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
             </Button>
         </Grid>
 
-        <ListView Grid.Row="1"
-                  ItemsSource="{Binding Items}"
-                  Margin="0"
-                  VirtualizingStackPanel.IsVirtualizing="True"
-                  VirtualizingPanel.ScrollUnit="Pixel">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="28"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+        <!--Results block-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Padding="16"
+                    Background="{DynamicResource SolidBackgroundFillColorBaseAltBrush}">
+                <ListView ItemsSource="{Binding Items}"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingPanel.ScrollUnit="Pixel"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="32"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Source="{Binding Thumb}" Width="24" Height="24"/>
+                                <Image Grid.Column="0"
+                                       Source="{Binding Thumb}"
+                                       Width="24" Height="24"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,6,0"/>
 
-                        <TextBlock Grid.Column="1" Text="{Binding Name}"
-                                   FontWeight="SemiBold" VerticalAlignment="Center"
-                                   TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Symbol}"
+                                               Margin="8,0,0,0"
+                                               Opacity="0.7"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                        <TextBlock Grid.Column="2" Margin="12,0,0,0"
-                                   Text="{Binding Symbol}" Opacity="0.75"
-                                   VerticalAlignment="Center"/>
-
-                        <TextBlock Grid.Column="3" Margin="12,0,0,0"
-                                   Text="{Binding MarketCapRank}"
-                                   Opacity="0.6" VerticalAlignment="Center"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                <Button Grid.Column="2"
+                                         Content="›"
+                                         Command="{Binding DataContext.OpenCoinDetailsCommand,
+                                                           RelativeSource={RelativeSource AncestorType=Page}}"
+                                         CommandParameter="{Binding Id}"
+                                         Width="32" Height="32"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         FontSize="20"
+                                         Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                         ToolTip="Open details"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

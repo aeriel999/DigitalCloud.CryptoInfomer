@@ -6,13 +6,13 @@ namespace DigitalCloud.CryptoInformer.Application.Models.Response.Currency;
 public class GetCoinDetailsResponse
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; } = null!;
+    public required string Id { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; } = null!;
+    public required string Name { get; init; } 
 
     [JsonPropertyName("symbol")]
-    public string Symbol { get; init; } = null!;
+    public required string Symbol { get; init; }
 
     [JsonPropertyName("market_cap_rank")]
     public int? MarketCapRank { get; init; }

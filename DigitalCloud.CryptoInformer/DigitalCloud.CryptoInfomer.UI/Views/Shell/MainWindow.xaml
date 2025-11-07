@@ -17,7 +17,9 @@
         
         <!--Header-->
         <views:AppHeader Grid.Row="0"/>
-        
+
+        <!--Add breadcrumbs-->
+
         <!-- content -->
         <Frame x:Name="MainFrame"
                Grid.Row="1"

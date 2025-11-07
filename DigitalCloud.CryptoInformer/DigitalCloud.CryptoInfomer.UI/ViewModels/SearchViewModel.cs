@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DigitalCloud.CryptoInfomer.UI.Services.Navigation.Interfaces;
+using DigitalCloud.CryptoInfomer.UI.Views.Pages;
 using DigitalCloud.CryptoInformer.Application.Interfaces;
 using DigitalCloud.CryptoInformer.Application.Models.Requests.Search;
 using DigitalCloud.CryptoInformer.Application.Models.Response.Search;
@@ -11,32 +13,72 @@ public partial class SearchViewModel : ObservableObject
 {
     private readonly ICoinGeckoClient _client;
 
-    [ObservableProperty] private string _query = string.Empty;
+    private readonly IDigitalCloudNavigationService _navigation;
+
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SearchCommand))] 
+    private string _query;
     public ObservableCollection<CoinSearchItem> Items { get; } = new();
 
-    public IRelayCommand SearchCommand { get; }
 
-    public SearchViewModel(ICoinGeckoClient client)
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SearchCommand))] 
+    private bool _isBusy;
+
+
+    private bool CanSearch() => !IsBusy && !string.IsNullOrWhiteSpace(Query);
+
+
+    public SearchViewModel(ICoinGeckoClient client, IDigitalCloudNavigationService navigation)
     {
         _client = client;
-        SearchCommand = new AsyncRelayCommand(DoSearchAsync, () => !string.IsNullOrWhiteSpace(Query));
-        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(Query)) (SearchCommand as AsyncRelayCommand)!.NotifyCanExecuteChanged(); };
+        _navigation = navigation;
+
+        _query = string.Empty;
     }
 
-    private async Task DoSearchAsync()
+
+    [RelayCommand]
+    private void OpenCoinDetails(string id)   
     {
-        Items.Clear();
+        if (string.IsNullOrWhiteSpace(id)) return;
+        _navigation.NavigateTo<CoinDetailsPage, string>(id);
+    }
 
-        var searchResultOrError = await _client.GetDataForSearchAsync(
-            new GetSearchCoinsRequest(Query.Trim()));
 
-        if (searchResultOrError.IsError)
+    [RelayCommand(CanExecute = nameof(CanSearch))]  
+    private async Task Search()  
+    {
+        try
         {
-            //TODO make error visualization
-            return;
-        }
+            IsBusy = true;  
+            Items.Clear();
 
-        foreach (var c in searchResultOrError.Value.Coins) Items.Add(c);
+            var searchingResultOrError = await _client.GetDataForSearchAsync(
+                new GetSearchCoinsRequest(Query.Trim()));
+
+            if (searchingResultOrError.IsError)
+            {
+                // TODO: make error visualization
+                return;
+            }
+
+            foreach (var c in searchingResultOrError.Value.Coins)
+                Items.Add(c);
+        }
+        finally
+        {
+            IsBusy = false;  
+        }
+    }
+
+
+    public void Reset()
+    {
+        IsBusy = false;
+        Query = string.Empty;
+        Items.Clear();
     }
 }
 

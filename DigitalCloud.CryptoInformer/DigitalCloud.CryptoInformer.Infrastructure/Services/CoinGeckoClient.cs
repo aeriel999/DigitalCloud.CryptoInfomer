@@ -293,7 +293,7 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
         try
         {
             var result = await httpClient.GetFromJsonAsync<GetSearchCoinsResponse>(
-                    $"{url}search?query={request.Query}");
+                    $"{url}/search?query={request.Query}");
 
             if (result == null)
                 return Error.NotFound(

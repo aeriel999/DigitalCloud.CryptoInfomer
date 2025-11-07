@@ -12,5 +12,7 @@ public partial class SearchPage : Page
     {
         InitializeComponent();
         DataContext = vm;
+
+        Loaded += (_, __) => (DataContext as SearchViewModel)?.Reset();
     }
 }

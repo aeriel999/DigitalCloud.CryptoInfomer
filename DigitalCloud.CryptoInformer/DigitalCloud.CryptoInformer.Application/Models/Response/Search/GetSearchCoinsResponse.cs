@@ -11,23 +11,23 @@ public class GetSearchCoinsResponse
 public class CoinSearchItem
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; } = null!;
+    public required string Id { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; } = null!;
+    public required string Name { get; init; } 
 
     [JsonPropertyName("api_symbol")]
-    public string ApiSymbol { get; init; } = null!;
+    public required string ApiSymbol { get; init; } 
 
     [JsonPropertyName("symbol")]
-    public string Symbol { get; init; } = null!;
+    public required string Symbol { get; init; }
 
     [JsonPropertyName("market_cap_rank")]
     public int? MarketCapRank { get; init; }
 
     [JsonPropertyName("thumb")]
-    public string Thumb { get; init; } = null!;
+    public required string Thumb { get; init; } 
 
     [JsonPropertyName("large")]
-    public string Large { get; init; } = null!;
+    public required string Large { get; init; } 
 }
