@@ -7,8 +7,8 @@
 		xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
 		mc:Ignorable="d"
         Style="{StaticResource BaseWindowStyle}"
-		Title="DigitalCloud.CryptoInfomer" 
-		ThemeMode="Light">
+		Title="DigitalCloud.CryptoInfomer"> 
+		
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -17,9 +17,9 @@
         
         <!--Header-->
         <views:AppHeader Grid.Row="0"/>
-
+        
         <!--Add breadcrumbs-->
-
+        
         <!-- content -->
         <Frame x:Name="MainFrame"
                Grid.Row="1"

@@ -102,10 +102,10 @@
 
             <!--Theme switcher-->
             <ToggleButton Grid.Column="2"
-                           Style="{StaticResource SwitchToggleStyle}"
-    					   x:Name="ThemeSwitch"
-				    	   Margin="8"
-					       Click="ThemeSwitch_Click"/>
+                          x:Name="ThemeSwitch"
+                          Style="{StaticResource SwitchToggleStyle}"
+                          Margin="8"
+                          />
         </Grid>
     </Grid>
 </UserControl>
