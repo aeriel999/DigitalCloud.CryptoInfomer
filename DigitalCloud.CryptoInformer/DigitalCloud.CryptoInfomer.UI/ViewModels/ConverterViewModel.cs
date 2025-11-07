@@ -5,7 +5,6 @@ using DigitalCloud.CryptoInformer.Application.Interfaces;
 using DigitalCloud.CryptoInformer.Application.Models.Requests.Charts;
 using DigitalCloud.CryptoInformer.Application.Models.Requests.Currency;
 using DigitalCloud.CryptoInformer.Application.Models.Response.Dropdowns;
-using ErrorOr;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -14,6 +13,8 @@ using System.Globalization;
 
 namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 {
+    //TODO make upload of next pfrt of coins for dropdown after getting to the end of th list
+    //+ make posibility for searching of currency in dropdown
     public partial class ConverterViewModel : ObservableObject
     {
         private readonly ICoinGeckoClient _coinGeckoClient;
@@ -47,9 +48,6 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                                  ToCurrencyCurrentCoin?.CurrentPrice is decimal &&
                                  IsAmountValid;
 
-
-        //[ObservableProperty] private decimal _amountFrom; 
-        //[ObservableProperty] private decimal _amountTo;  
 
 
         [ObservableProperty] private PlotModel? _priceLinePlotModel;
@@ -92,7 +90,11 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             var getCoinListForDropdownOrError = await _coinGeckoClient.GetCoinsListForDropdawnAsync(
                 new GetCoinsListForDropdawnRequest(250, 1));
 
-            if (getCoinListForDropdownOrError.IsError) return;
+            if (getCoinListForDropdownOrError.IsError) 
+            {
+                //TODO make error visualization
+                return;
+            }
 
             _сoinListForDropdown = getCoinListForDropdownOrError.Value;
 
@@ -118,7 +120,11 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
         //Selected coin due to selection in dropdowns
         partial void OnSelectedFromIdChanged(string? value)
         {
-            if (string.IsNullOrWhiteSpace(value) || _сoinListForDropdown.Count == 0) return;
+            if (string.IsNullOrWhiteSpace(value) || _сoinListForDropdown.Count == 0)
+            {
+                //TODO make error visualization
+                return;
+            }
 
             FromCurrencyCurrentCoin = _сoinListForDropdown.FirstOrDefault(c => c.Id == value);
             _ = LoadPriceChartAsync();
@@ -143,7 +149,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             ConvertAsyncCommand.NotifyCanExecuteChanged();
         }
 
-        //
+        
         partial void OnAmountChanged(string value)
         {
             IsAmountValid = TryParseAmount(value, out var v) && v > AMOUNT_MIN && v < AMOUNT_MAX;
@@ -177,12 +183,15 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                                 CurrencyPricePrecision: CurrencyPricePrecision.FULL
                             );
 
-            var response = await _coinGeckoClient.GetDataForListChart(request);
+            var dataForListChartOrError = await _coinGeckoClient.GetDataForListChartAsync(request);
 
-            if (response.IsError || response.Value is null)
+            if (dataForListChartOrError.IsError || dataForListChartOrError.Value is null)
+            {
+                //TODO make error visualization
                 return;
+            }
 
-            var data = response.Value.Prices;
+            var data = dataForListChartOrError.Value.Prices;
 
             PriceLinePlotModel = null;
 
@@ -194,6 +203,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                 StringFormat = "MM-dd",
                 IntervalType = DateTimeIntervalType.Days
             });
+
             model.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
@@ -211,25 +221,34 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             }
 
             model.Series.Add(series);
+
             PriceLinePlotModel = model;
         }
 
         [RelayCommand]
         public async Task LoadCandlesAsync()
         {
-            if (FromCurrencyCurrentCoin is null) return;
+            if (FromCurrencyCurrentCoin is null)
+            {
+                //TODO make error visualization
+                return;
+            }
 
-            var req = new GetDataForCandlestickChartRequest(
+            var request = new GetDataForCandlestickChartRequest(
                                     FromCurrencyCurrentCoin.Id, 
                                     MarketCurrencies.USD, 
                                     DaysPeriod.THIRTY_DAYS, 
                                     CurrencyPricePrecision.FULL);
 
-            var res = await _coinGeckoClient.GetDataForCandlestickChart(req); 
+            var dataForCandleChartOrError = await _coinGeckoClient.GetDataForCandlestickChartAsync(request);
 
-            if (res.IsError) return;
+            if (dataForCandleChartOrError.IsError)
+            {
+                //TODO make error visualization
+                return;
+            }
 
-            var candles = res.Value;  
+            var candles = dataForCandleChartOrError.Value;  
 
             CandlePlotModel = null;
 
@@ -243,6 +262,7 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot
             });
+
             model.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,

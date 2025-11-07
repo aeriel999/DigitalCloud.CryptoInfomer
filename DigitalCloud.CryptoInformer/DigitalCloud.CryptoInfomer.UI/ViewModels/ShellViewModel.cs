@@ -8,31 +8,36 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
 {
     public partial class ShellViewModel : ObservableObject
     {
-       private readonly IDigitalCloudNavigationService _navigationService;
+        private readonly IDigitalCloudNavigationService _navigationService;
 
-
-       public enum AppPage { CoinsList, Converter, CoinDetails }
+        public enum AppPage
+        {
+            CoinsList,
+            Converter,
+            CoinDetails,
+            Search
+        }
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GoToCoinsListCommand))]
         [NotifyCanExecuteChangedFor(nameof(GoToConverterCommand))]
         [NotifyCanExecuteChangedFor(nameof(GoToCoinDetailsCommand))]
+        [NotifyCanExecuteChangedFor(nameof(GoToCoinSearchCommand))]
         private AppPage _currentPage;
 
         private bool CanGoToCoinsList() => CurrentPage != AppPage.CoinsList;
         private bool CanGoToConverter() => CurrentPage != AppPage.Converter;
         private bool CanGoToCoinDetails() => CurrentPage != AppPage.CoinDetails;
+        private bool CanGoToCoinSearch() => CurrentPage != AppPage.Search;
 
 
         public ShellViewModel(IDigitalCloudNavigationService navigationService)
         {
             _navigationService = navigationService;
-
-            _navigationService.Navigated += OnNavigated; // added
+            _navigationService.Navigated += OnNavigated;
 
             CurrentPage = AppPage.CoinsList;
         }
-
 
         private void OnNavigated(Type pageType)
         {
@@ -40,9 +45,9 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
                 pageType == typeof(CoinsListPage) ? AppPage.CoinsList :
                 pageType == typeof(ConverterPage) ? AppPage.Converter :
                 pageType == typeof(CoinDetailsPage) ? AppPage.CoinDetails :
+                pageType == typeof(SearchPage) ? AppPage.Search :
                 CurrentPage;
         }
-
 
         [RelayCommand(CanExecute = nameof(CanGoToCoinsList))]
         private void GoToCoinsList()
@@ -66,6 +71,14 @@ namespace DigitalCloud.CryptoInfomer.UI.ViewModels
             if (CurrentPage == AppPage.CoinDetails) return;
             _navigationService.NavigateTo<CoinDetailsPage>();
             CurrentPage = AppPage.CoinDetails;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanGoToCoinSearch))]
+        private void GoToCoinSearch()
+        {
+            if (CurrentPage == AppPage.Search) return;
+            _navigationService.NavigateTo<SearchPage>();
+            CurrentPage = AppPage.Search; 
         }
     }
 }

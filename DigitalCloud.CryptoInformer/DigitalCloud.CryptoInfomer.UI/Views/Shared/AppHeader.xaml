@@ -57,9 +57,9 @@
                   VerticalAlignment="Center">
             <MenuItem Header="Home"     Command="{Binding GoToCoinsListCommand}"   Cursor="Hand"/>
             <MenuItem Header="Converter" Command="{Binding GoToConverterCommand}"   Cursor="Hand"/>
-            <MenuItem Header="About" />
-            
-            
+            <MenuItem Header="Search" Command="{Binding GoToCoinSearchCommand}"/>
+
+
         </Menu>
 
         <!--Logo-->
@@ -82,20 +82,15 @@
             </Grid.ColumnDefinitions>
 
             <!--Search-->
-            <Grid Grid.Column="0"
-                      HorizontalAlignment="Right" 
-                      Margin="0,0,15,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <!--<TextBox />-->
-                <TextBlock  
-							VerticalAlignment="Center"
-							FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
-							Text="&#xE721;"/>
-            </Grid>
-
+            <Button Grid.Column="0" Margin="0,0,15,0"
+                    Command="{Binding GoToCoinSearchCommand}"
+                    ToolTip="Search"
+                    Background="Transparent" BorderThickness="0">
+                <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                             Text="&#xE721;" FontSize="16"
+                             VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+            
             <!--Localization-->
             <ComboBox Grid.Column="1"
 					      HorizontalAlignment="Left" 

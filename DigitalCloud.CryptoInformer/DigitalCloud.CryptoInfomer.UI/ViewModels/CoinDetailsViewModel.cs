@@ -63,15 +63,15 @@ public partial class CoinDetailsViewModel : ObservableObject
                                                     IncludeDeveloperData: false,
                                                     IncludeSparkline: true);
 
-            var result = await _coinGeckoClient.GetDetailsInformationForCoinAsync(coinDetailsRequest);
+            var coinDetailsInformationOrError = await _coinGeckoClient.GetDetailsInformationForCoinAsync(coinDetailsRequest);
 
-            if (result.IsError)
+            if (coinDetailsInformationOrError.IsError)
             {
                 //TODO make error visualization
                 return;
             }
 
-            Coin = result.Value;
+            Coin = coinDetailsInformationOrError.Value;
         }
         finally { IsLoading = false; }
     }
@@ -104,6 +104,7 @@ public partial class CoinDetailsViewModel : ObservableObject
             PriceModel = new PlotModel(); 
 
         var prices = Coin?.MarketData?.Sparkline7D?.Price;
+
         if (prices is null || prices.Count == 0)
         {
             PriceModel!.Series.Clear();   
@@ -118,6 +119,7 @@ public partial class CoinDetailsViewModel : ObservableObject
         var startUtc = DateTimeOffset.UtcNow.AddDays(-7);
 
         var series = new LineSeries { MarkerType = MarkerType.None };
+
         for (int i = 0; i < prices.Count; i++)
         {
             var tLocal = startUtc.AddHours(i).ToLocalTime().DateTime;

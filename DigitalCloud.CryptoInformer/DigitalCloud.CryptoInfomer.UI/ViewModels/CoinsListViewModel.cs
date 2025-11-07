@@ -48,13 +48,14 @@ public partial class CoinsListViewModel : ObservableObject
 
         InitialLoadCurrenciesCommand = new AsyncRelayCommand(InitialLoadCurrenciesAsync);
 
-       _ = InitialLoadCurrenciesAsync();
+     //  _ = InitialLoadCurrenciesAsync();
 
         SetTop10ModeCommand = new AsyncRelayCommand(SetTop10ModeAsync);
         SetTop100ModeCommand = new AsyncRelayCommand(SetTop100ModeAsync);
         SetAllListModeCommand = new AsyncRelayCommand(SetAllListModeAsync);
         LoadNextPartForCurenciesListCommand = new AsyncRelayCommand(LoadNextPartForCurenciesListAsync);
     }
+
 
     public IAsyncRelayCommand InitialLoadCurrenciesCommand { get; }
     public IAsyncRelayCommand SetTop10ModeCommand { get; }
@@ -63,12 +64,14 @@ public partial class CoinsListViewModel : ObservableObject
     public IAsyncRelayCommand LoadNextPartForCurenciesListCommand { get; }
 
 
-
     [RelayCommand]
     private void OpenCoinDetails(string coinId)
     {
         if (string.IsNullOrWhiteSpace(coinId))
+        {
+            //TODO make error visualization
             return;
+        }
 
         _navigation.NavigateTo<CoinDetailsPage, string>(coinId);
     }
@@ -80,14 +83,15 @@ public partial class CoinsListViewModel : ObservableObject
         {
             IsLoading = true;
 
-            var result = await _coinGeckoClient.GetListOfCurrenciesAsync();
-            if (result.IsError)
+            var listOfCurrenciesOrError = await _coinGeckoClient.GetListOfCurrenciesAsync();
+
+            if (listOfCurrenciesOrError.IsError)
             {
                 //TODO make error visualization
                 return;
             }
 
-            foreach (var item in result.Value)
+            foreach (var item in listOfCurrenciesOrError.Value)
                 Currencies.Add(item);
         }
         finally { IsLoading = false; }

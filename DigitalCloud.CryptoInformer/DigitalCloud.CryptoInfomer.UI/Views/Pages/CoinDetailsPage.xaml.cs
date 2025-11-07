@@ -46,6 +46,5 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Pages
             var pv = (OxyPlot.Wpf.PlotView)sender;
             pv.Model = null;
         }
-
     }
 }

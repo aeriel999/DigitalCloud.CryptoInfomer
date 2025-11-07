@@ -2,9 +2,11 @@
 using DigitalCloud.CryptoInformer.Application.Models.Requests.Charts;
 using DigitalCloud.CryptoInformer.Application.Models.Requests.Currency;
 using DigitalCloud.CryptoInformer.Application.Models.Requests.Dropdown;
+using DigitalCloud.CryptoInformer.Application.Models.Requests.Search;
 using DigitalCloud.CryptoInformer.Application.Models.Response.Charts;
 using DigitalCloud.CryptoInformer.Application.Models.Response.Currency;
 using DigitalCloud.CryptoInformer.Application.Models.Response.Dropdowns;
+using DigitalCloud.CryptoInformer.Application.Models.Response.Search;
 using DigitalCloud.CryptoInformer.Application.Utils;
 using DigitalCloud.CryptoInformer.Infrastructure.Helpers;
 using ErrorOr;
@@ -205,7 +207,7 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
         }
     }
 
-    public async Task<ErrorOr<DataForListChartResponse>> GetDataForListChart(GetDataForListChartRequest request)
+    public async Task<ErrorOr<DataForListChartResponse>> GetDataForListChartAsync(GetDataForListChartRequest request)
     {
         //TODO CASH
         try
@@ -246,7 +248,7 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
         }
     }
 
-    public async Task<ErrorOr<IReadOnlyList<DataForCandlestickChartResponse>>> GetDataForCandlestickChart(GetDataForCandlestickChartRequest request)
+    public async Task<ErrorOr<IReadOnlyList<DataForCandlestickChartResponse>>> GetDataForCandlestickChartAsync(GetDataForCandlestickChartRequest request)
     {
         //TODO CASH
         try
@@ -265,6 +267,40 @@ internal class CoinGeckoClient(HttpClient httpClient, string url, IMemoryCache c
             IReadOnlyList<DataForCandlestickChartResponse> mapped = OhlcMapper.FromRaw(result);
 
             return ErrorOrFactory.From(mapped);  
+        }
+        catch (HttpRequestException)
+        {
+            return Error.Failure(
+                   code: "Network.Error",
+                   description: LocalizationHelper.Get("NetworkError"));
+        }
+        catch (JsonException)
+        {
+            return Error.Failure(
+                    code: "Json.ParseError",
+                    description: LocalizationHelper.Get("JsonParseError"));
+        }
+        catch (Exception)
+        {
+            return Error.Failure(
+                    code: "General.Failure",
+                    description: LocalizationHelper.Get("GeneralFailure"));
+        }
+    }
+
+    public async Task<ErrorOr<GetSearchCoinsResponse>> GetDataForSearchAsync(GetSearchCoinsRequest request)
+    {
+        try
+        {
+            var result = await httpClient.GetFromJsonAsync<GetSearchCoinsResponse>(
+                    $"{url}search?query={request.Query}");
+
+            if (result == null)
+                return Error.NotFound(
+                          code: "Empty.Result",
+                          description: LocalizationHelper.Get("EmptyResult"));
+
+            return result;
         }
         catch (HttpRequestException)
         {

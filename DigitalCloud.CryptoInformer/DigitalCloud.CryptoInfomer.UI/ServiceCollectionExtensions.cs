@@ -16,11 +16,13 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<CoinDetailsViewModel>();
         services.AddSingleton<CoinsListViewModel>();
         services.AddSingleton<ConverterViewModel>();
+        services.AddSingleton<SearchViewModel>();
 
         services.AddSingleton<MainWindow>();
         services.AddTransient<CoinsListPage>();
         services.AddTransient<CoinDetailsPage>();
         services.AddTransient<ConverterPage>();
+        services.AddTransient<SearchPage>();
 
         services.AddSingleton<IDigitalCloudNavigationService, DigitalCloudNavigationService>();
 
