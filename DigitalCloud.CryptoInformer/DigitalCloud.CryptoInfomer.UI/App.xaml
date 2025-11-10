@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:DigitalCloud.CryptoInfomer.UI"
-             xmlns:ui="http://schemas.modernwpf.com/2019"
              Startup="OnStartup"
              ThemeMode="Light">
     <Application.Resources>
@@ -23,5 +22,6 @@
             </Style>
             
         </ResourceDictionary>
+        
     </Application.Resources>
 </Application>
