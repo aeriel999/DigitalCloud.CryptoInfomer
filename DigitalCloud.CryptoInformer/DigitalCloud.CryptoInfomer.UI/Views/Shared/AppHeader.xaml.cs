@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+
 
 namespace DigitalCloud.CryptoInfomer.UI.Views.Shared
 {
@@ -14,19 +16,33 @@ namespace DigitalCloud.CryptoInfomer.UI.Views.Shared
 
             Loaded += (_, __) =>
             {
-                ThemeSwitch.IsChecked = Application.Current.ThemeMode == ThemeMode.Dark;
+#pragma warning disable WPF0001
+                var isDark = Application.Current.ThemeMode == ThemeMode.Dark;
+#pragma warning restore WPF0001
+
+                ThemeSwitch.IsChecked = isDark;
+                ApplyTheme(isDark);  
             };
-            ThemeSwitch.Click += ThemeSwitch_Click;
         }
 
-        private void ThemeSwitch_Click(object? sender, RoutedEventArgs e)
+
+        private void ThemeSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            var isDark = ThemeSwitch.IsChecked == true;
+            ApplyTheme(isDark);
+        }
+
+
+        private static void ApplyTheme(bool isDark)
         {
 #pragma warning disable WPF0001
-            var app = Application.Current;
-            app.ThemeMode = (ThemeSwitch.IsChecked == true) ? ThemeMode.Dark : ThemeMode.Light;
+            Application.Current.ThemeMode = isDark ? ThemeMode.Dark : ThemeMode.Light;
 #pragma warning restore WPF0001
+
+            var key = isDark ? "AppLogoDark" : "AppLogoLight";
+
+            Application.Current.Resources["AppLogo"] =
+                (ImageSource)Application.Current.Resources[key];
         }
     }
-
-
 }

@@ -10,7 +10,7 @@
         <Style x:Key="SwitchToggleStyle" TargetType="ToggleButton">
             <Setter Property="Width" Value="40"/>
             <Setter Property="Height" Value="20"/>
-            <Setter Property="Background" Value="#E5E5E5"/>
+            <Setter Property="Background" Value="#4BA3E3"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -24,13 +24,13 @@
                             <Border x:Name="Thumb"
                                      Width="15" Height="15"
                                      CornerRadius="10"
-                                     Background="White"
+                                     Background="Gray"
                                      Margin="2"
                                      HorizontalAlignment="Left"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="Track" Property="Background" Value="#4BA3E3"/>
+                                <Setter TargetName="Track" Property="Background" Value="#E5E5E5"/>
                                 <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
@@ -58,13 +58,12 @@
             <MenuItem Header="Home"     Command="{Binding GoToCoinsListCommand}"   Cursor="Hand"/>
             <MenuItem Header="Converter" Command="{Binding GoToConverterCommand}"   Cursor="Hand"/>
             <MenuItem Header="Search" Command="{Binding GoToCoinSearchCommand}"/>
-
-
         </Menu>
 
         <!--Logo-->
-        <Image Grid.Column="1" 
-			    Source="/Assets/Images/logo_4.png"
+        <Image x:Name="Logo"
+                Grid.Column="1" 
+			    Source="{DynamicResource AppLogo}"
                 MaxHeight="100"
 			    MinHeight="20"
 			    Margin="0, 15, 0, 15"
@@ -104,8 +103,8 @@
             <ToggleButton Grid.Column="2"
                           x:Name="ThemeSwitch"
                           Style="{StaticResource SwitchToggleStyle}"
-                          Margin="8"
-                          />
+                          Click="ThemeSwitch_Click"
+                          Margin="8" />
         </Grid>
     </Grid>
 </UserControl>

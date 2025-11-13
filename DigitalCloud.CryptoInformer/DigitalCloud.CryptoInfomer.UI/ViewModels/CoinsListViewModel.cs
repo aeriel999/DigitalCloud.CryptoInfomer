@@ -48,7 +48,7 @@ public partial class CoinsListViewModel : ObservableObject
 
         InitialLoadCurrenciesCommand = new AsyncRelayCommand(InitialLoadCurrenciesAsync);
 
-       _ = InitialLoadCurrenciesAsync();
+     //  _ = InitialLoadCurrenciesAsync();
 
         SetTop10ModeCommand = new AsyncRelayCommand(SetTop10ModeAsync);
         SetTop100ModeCommand = new AsyncRelayCommand(SetTop100ModeAsync);

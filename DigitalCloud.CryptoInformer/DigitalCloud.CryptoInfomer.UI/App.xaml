@@ -20,7 +20,12 @@
                 <Setter Property="MinWidth" Value="800"/>
                 <Setter Property="MaxWidth" Value="1500"/>
             </Style>
-            
+
+            <ImageSource x:Key="AppLogo">/Assets/Images/logo_light.png</ImageSource>
+
+            <ImageSource x:Key="AppLogoLight">/Assets/Images/logo_light.png</ImageSource>
+            <ImageSource x:Key="AppLogoDark">/Assets/Images/logo_dark.png</ImageSource>
+
         </ResourceDictionary>
         
     </Application.Resources>

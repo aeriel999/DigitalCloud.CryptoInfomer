@@ -11,10 +11,9 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
-    <None Remove="Assets\Images\Logo.png" />
-    <None Remove="Assets\Images\logo_4.png" />
-    <None Remove="Assets\Images\logo_45.png" />
-  </ItemGroup>
+    <None Remove="Assets\Images\logo_dark.png" />
+    <None Remove="Assets\Images\logo_light.png" />
+   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.json">
@@ -38,7 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Images\logo_4.png">
+    <Resource Include="Assets\Images\logo_dark.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\logo_light.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
