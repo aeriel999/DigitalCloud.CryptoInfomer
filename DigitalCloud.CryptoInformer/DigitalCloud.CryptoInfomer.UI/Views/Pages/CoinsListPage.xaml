@@ -20,10 +20,12 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         
+        <!--Bar for BTN-->
         <Grid Grid.Row="0" 
               Height="Auto" 
               VerticalAlignment="Stretch"
-              Background="#4BA3E3">
+              Background="{DynamicResource AccentFillColorTertiaryBrush}">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -54,7 +56,7 @@
                     HorizontalAlignment="Center"
                     Click="All_Button_Click"
                     Command="{Binding SetAllListModeCommand}"/>
-            
+
             <!--ComboBox With platforms-->
             <ComboBox Grid.Column="3" 
                        MinWidth="200" 
@@ -80,7 +82,7 @@
                 
                 <!--Table-->
                 <DataGrid Grid.Column="1"
-                            Background="White"
+                            Background="{DynamicResource SystemFillColorAttentionBackgroundBrush}"
                             ItemsSource="{Binding Currencies}" 
                             AutoGenerateColumns="False"
                             HorizontalAlignment="Stretch"
@@ -117,7 +119,7 @@
                                                            FontSize="14"/>
                                             <TextBlock Text="{Binding CurrencySymbol}"
                                                            FontSize="11"
-                                                           Foreground="#808080"
+                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                            TextWrapping="NoWrap" />
                                         </StackPanel>
                                     </StackPanel>
