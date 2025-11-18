@@ -11,8 +11,9 @@
 		
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
         </Grid.RowDefinitions>
         
         <!--Header-->
@@ -24,5 +25,8 @@
         <Frame x:Name="MainFrame"
                Grid.Row="1"
                NavigationUIVisibility="Hidden" />
+        
+        <!--Footer-->
+        <views:AppFooter Grid.Row="2"/>
     </Grid>
 </Window>

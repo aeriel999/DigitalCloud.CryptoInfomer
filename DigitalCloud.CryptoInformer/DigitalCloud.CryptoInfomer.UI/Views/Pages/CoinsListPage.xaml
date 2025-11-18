@@ -82,7 +82,7 @@
                 
                 <!--Table-->
                 <DataGrid Grid.Column="1"
-                            Background="{DynamicResource SystemFillColorAttentionBackgroundBrush}"
+                            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
                             ItemsSource="{Binding Currencies}" 
                             AutoGenerateColumns="False"
                             HorizontalAlignment="Stretch"
